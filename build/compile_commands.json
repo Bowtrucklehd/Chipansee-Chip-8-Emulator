@@ -1,0 +1,26 @@
+[
+{
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build",
+  "command": "/usr/bin/c++  -I/opt/homebrew/Cellar/sdl2/2.32.10/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/chip8.dir/src/main.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/main.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/main.cpp",
+  "output": "CMakeFiles/chip8.dir/src/main.cpp.o"
+},
+{
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build",
+  "command": "/usr/bin/c++  -I/opt/homebrew/Cellar/sdl2/2.32.10/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/chip8.dir/src/Display.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Display.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Display.cpp",
+  "output": "CMakeFiles/chip8.dir/src/Display.cpp.o"
+},
+{
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build",
+  "command": "/usr/bin/c++  -I/opt/homebrew/Cellar/sdl2/2.32.10/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/chip8.dir/src/Input.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Input.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Input.cpp",
+  "output": "CMakeFiles/chip8.dir/src/Input.cpp.o"
+},
+{
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build",
+  "command": "/usr/bin/c++  -I/opt/homebrew/Cellar/sdl2/2.32.10/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/chip8.dir/src/Chip8.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Chip8.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Chip8.cpp",
+  "output": "CMakeFiles/chip8.dir/src/Chip8.cpp.o"
+}
+]
