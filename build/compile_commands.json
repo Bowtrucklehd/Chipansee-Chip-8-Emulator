@@ -24,6 +24,18 @@
   "output": "CMakeFiles/chip8.dir/src/Chip8.cpp.o"
 },
 {
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/opt/homebrew/Cellar/sdl2/2.32.10/include -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/test_display.dir/src/test_display.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/test_display.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/test_display.cpp",
+  "output": "CMakeFiles/test_display.dir/src/test_display.cpp.o"
+},
+{
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/opt/homebrew/Cellar/sdl2/2.32.10/include -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/test_display.dir/src/Display.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Display.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Display.cpp",
+  "output": "CMakeFiles/test_display.dir/src/Display.cpp.o"
+},
+{
   "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-build",
   "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -g -std=c++20 -arch arm64 -o CMakeFiles/spdlog.dir/src/spdlog.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/spdlog.cpp",
   "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/spdlog.cpp",

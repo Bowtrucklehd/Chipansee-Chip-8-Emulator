@@ -8,6 +8,7 @@
 #include <string>
 
 struct Instruction {
+        uint16_t full_opcode; // full opcode
         uint8_t code; // first nibble
         uint8_t x; // second nibble
         uint8_t y; // third nibble

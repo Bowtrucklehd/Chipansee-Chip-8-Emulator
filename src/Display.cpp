@@ -30,11 +30,12 @@ Display::~Display() {
 }
 
 bool Display::invertPixel(int x, int y) {
-    x %= DISPLAY_WIDTH;
-    y %= DISPLAY_HEIGHT;
+    if (x < 0 || y < 0 || x >= DISPLAY_WIDTH || y >= DISPLAY_HEIGHT)
+        return false;
     bool& pixel = m_frameBuffer[y * DISPLAY_WIDTH + x];
+    bool collision = pixel;
     pixel = !pixel;
-    return !pixel;
+    return collision;
 }
 
 void Display::clear() {

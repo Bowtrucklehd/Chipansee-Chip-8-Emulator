@@ -27,3 +27,7 @@ add_executable(chip8
 
 target_include_directories(chip8 PRIVATE ${SDL2_INCLUDE_DIRS})
 target_link_libraries(chip8 PRIVATE ${SDL2_LIBRARIES} spdlog::spdlog)
+
+add_executable(test_display src/test_display.cpp src/Display.cpp)
+target_include_directories(test_display PRIVATE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(test_display PRIVATE ${SDL2_LIBRARIES} spdlog::spdlog)

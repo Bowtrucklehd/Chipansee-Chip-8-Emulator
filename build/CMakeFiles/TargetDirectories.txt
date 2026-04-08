@@ -1,4 +1,5 @@
 /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles/chip8.dir
+/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles/test_display.dir
 /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles/edit_cache.dir
 /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles/rebuild_cache.dir
 /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-build/CMakeFiles/spdlog.dir

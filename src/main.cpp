@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
         chip8.loadRom(argv[1]);
 
-        const uint32_t frameMs = 1000 / TIMER_HZ;
+        const uint32_t frameMs = 1000;//1000 / TIMER_HZ;
 
         while (true) {
             uint32_t frameStart = SDL_GetTicks();

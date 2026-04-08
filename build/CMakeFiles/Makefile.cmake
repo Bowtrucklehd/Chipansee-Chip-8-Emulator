@@ -69,5 +69,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/chip8.dir/DependInfo.cmake"
+  "CMakeFiles/test_display.dir/DependInfo.cmake"
   "_deps/spdlog-build/CMakeFiles/spdlog.dir/DependInfo.cmake"
   )

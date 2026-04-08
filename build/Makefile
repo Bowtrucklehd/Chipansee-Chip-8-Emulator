@@ -130,6 +130,19 @@ chip8/fast:
 .PHONY : chip8/fast
 
 #=============================================================================
+# Target rules for targets named test_display
+
+# Build rule for target.
+test_display: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_display
+.PHONY : test_display
+
+# fast build rule for target.
+test_display/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_display.dir/build.make CMakeFiles/test_display.dir/build
+.PHONY : test_display/fast
+
+#=============================================================================
 # Target rules for targets named spdlog
 
 # Build rule for target.
@@ -172,6 +185,7 @@ src/Display.o: src/Display.cpp.o
 # target to build an object file
 src/Display.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/src/Display.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_display.dir/build.make CMakeFiles/test_display.dir/src/Display.cpp.o
 .PHONY : src/Display.cpp.o
 
 src/Display.i: src/Display.cpp.i
@@ -180,6 +194,7 @@ src/Display.i: src/Display.cpp.i
 # target to preprocess a source file
 src/Display.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/src/Display.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_display.dir/build.make CMakeFiles/test_display.dir/src/Display.cpp.i
 .PHONY : src/Display.cpp.i
 
 src/Display.s: src/Display.cpp.s
@@ -188,6 +203,7 @@ src/Display.s: src/Display.cpp.s
 # target to generate assembly for a file
 src/Display.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/src/Display.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_display.dir/build.make CMakeFiles/test_display.dir/src/Display.cpp.s
 .PHONY : src/Display.cpp.s
 
 src/Input.o: src/Input.cpp.o
@@ -238,6 +254,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/test_display.o: src/test_display.cpp.o
+.PHONY : src/test_display.o
+
+# target to build an object file
+src/test_display.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_display.dir/build.make CMakeFiles/test_display.dir/src/test_display.cpp.o
+.PHONY : src/test_display.cpp.o
+
+src/test_display.i: src/test_display.cpp.i
+.PHONY : src/test_display.i
+
+# target to preprocess a source file
+src/test_display.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_display.dir/build.make CMakeFiles/test_display.dir/src/test_display.cpp.i
+.PHONY : src/test_display.cpp.i
+
+src/test_display.s: src/test_display.cpp.s
+.PHONY : src/test_display.s
+
+# target to generate assembly for a file
+src/test_display.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_display.dir/build.make CMakeFiles/test_display.dir/src/test_display.cpp.s
+.PHONY : src/test_display.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -248,6 +288,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... chip8"
 	@echo "... spdlog"
+	@echo "... test_display"
 	@echo "... src/Chip8.o"
 	@echo "... src/Chip8.i"
 	@echo "... src/Chip8.s"
@@ -260,6 +301,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/test_display.o"
+	@echo "... src/test_display.i"
+	@echo "... src/test_display.s"
 .PHONY : help
 
 
