@@ -64,25 +64,47 @@ CMAKE_BINARY_DIR = /Users/henriweidner/Documents/Privat/programming/Chip8-Emulat
 
 # The main recursive "all" target.
 all: CMakeFiles/chip8.dir/all
+all: _deps/spdlog-build/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: CMakeFiles/chip8.dir/codegen
+codegen: _deps/spdlog-build/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
-preinstall:
+preinstall: _deps/spdlog-build/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: CMakeFiles/chip8.dir/clean
+clean: _deps/spdlog-build/clean
 .PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory _deps/spdlog-build
+
+# Recursive "all" directory target.
+_deps/spdlog-build/all: _deps/spdlog-build/CMakeFiles/spdlog.dir/all
+.PHONY : _deps/spdlog-build/all
+
+# Recursive "codegen" directory target.
+_deps/spdlog-build/codegen: _deps/spdlog-build/CMakeFiles/spdlog.dir/codegen
+.PHONY : _deps/spdlog-build/codegen
+
+# Recursive "preinstall" directory target.
+_deps/spdlog-build/preinstall:
+.PHONY : _deps/spdlog-build/preinstall
+
+# Recursive "clean" directory target.
+_deps/spdlog-build/clean: _deps/spdlog-build/CMakeFiles/spdlog.dir/clean
+.PHONY : _deps/spdlog-build/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/chip8.dir
 
 # All Build rule for target.
-CMakeFiles/chip8.dir/all:
+CMakeFiles/chip8.dir/all: _deps/spdlog-build/CMakeFiles/spdlog.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target chip8"
@@ -90,7 +112,7 @@ CMakeFiles/chip8.dir/all:
 
 # Build rule for subdir invocation for target.
 CMakeFiles/chip8.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles 13
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/chip8.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles 0
 .PHONY : CMakeFiles/chip8.dir/rule
@@ -109,6 +131,38 @@ CMakeFiles/chip8.dir/codegen:
 CMakeFiles/chip8.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/clean
 .PHONY : CMakeFiles/chip8.dir/clean
+
+#=============================================================================
+# Target rules for target _deps/spdlog-build/CMakeFiles/spdlog.dir
+
+# All Build rule for target.
+_deps/spdlog-build/CMakeFiles/spdlog.dir/all:
+	$(MAKE) $(MAKESILENT) -f _deps/spdlog-build/CMakeFiles/spdlog.dir/build.make _deps/spdlog-build/CMakeFiles/spdlog.dir/depend
+	$(MAKE) $(MAKESILENT) -f _deps/spdlog-build/CMakeFiles/spdlog.dir/build.make _deps/spdlog-build/CMakeFiles/spdlog.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles --progress-num=6,7,8,9,10,11,12,13 "Built target spdlog"
+.PHONY : _deps/spdlog-build/CMakeFiles/spdlog.dir/all
+
+# Build rule for subdir invocation for target.
+_deps/spdlog-build/CMakeFiles/spdlog.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles 8
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/spdlog-build/CMakeFiles/spdlog.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles 0
+.PHONY : _deps/spdlog-build/CMakeFiles/spdlog.dir/rule
+
+# Convenience name for target.
+spdlog: _deps/spdlog-build/CMakeFiles/spdlog.dir/rule
+.PHONY : spdlog
+
+# codegen rule for target.
+_deps/spdlog-build/CMakeFiles/spdlog.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f _deps/spdlog-build/CMakeFiles/spdlog.dir/build.make _deps/spdlog-build/CMakeFiles/spdlog.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles --progress-num=6,7,8,9,10,11,12,13 "Finished codegen for target spdlog"
+.PHONY : _deps/spdlog-build/CMakeFiles/spdlog.dir/codegen
+
+# clean rule for target.
+_deps/spdlog-build/CMakeFiles/spdlog.dir/clean:
+	$(MAKE) $(MAKESILENT) -f _deps/spdlog-build/CMakeFiles/spdlog.dir/build.make _deps/spdlog-build/CMakeFiles/spdlog.dir/clean
+.PHONY : _deps/spdlog-build/CMakeFiles/spdlog.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

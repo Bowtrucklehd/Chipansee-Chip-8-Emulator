@@ -2,35 +2,44 @@
 
 #include "Display.h"
 #include "Input.h"
-
-#include <array>
+#include <SDL_stdinc.h>
 #include <cstdint>
+#include <stack>
 #include <string>
 
-static constexpr int MEMORY_SIZE     = 4096;
-static constexpr int REGISTER_COUNT  = 16;
-static constexpr int STACK_SIZE      = 16;
-static constexpr int ROM_START       = 0x200;
+struct Instruction {
+        uint8_t code; // first nibble
+        uint8_t x; // second nibble
+        uint8_t y; // third nibble
+        uint8_t N; // fourth nibble
+        uint8_t NN; // second byte
+        uint16_t NNN; // second, third and fourth nibble
+};
 
 class Chip8 {
-public:
-    Chip8(Display& display, Input& input);
 
-    void loadROM(const std::string& path);
-    void cycle();
+        public:
+                Chip8(Display& display, Input& input);
+                ~Chip8();
 
-    uint8_t delayTimer = 0;
-    uint8_t soundTimer = 0;
+                void loadRom(const std::string& path);
+                void cycle();
 
-private:
-    Display& m_display;
-    Input&   m_input;
+                void decrement_delay();
+                void decrement_sound();
+        private:
+                uint16_t fetch();
+                Instruction decode(uint16_t opcode);
+                bool execute(Instruction instruction);
 
-    std::array<uint8_t,  MEMORY_SIZE>    m_memory{};
-    std::array<uint8_t,  REGISTER_COUNT> m_registers{};
-    std::array<uint16_t, STACK_SIZE>     m_stack{};
+                Display& display;
+                Input& input;
 
-    uint16_t m_pc  = ROM_START;
-    uint16_t m_I   = 0;
-    uint8_t  m_sp  = 0;
+                uint8_t memory[4096];
+                uint16_t index;
+                uint16_t pc;
+                uint16_t variable_register[16];
+                std::stack<uint16_t> stack;
+                uint8_t delay_timer;
+                uint8_t sound_timer;
 };

@@ -129,6 +129,19 @@ chip8/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/build
 .PHONY : chip8/fast
 
+#=============================================================================
+# Target rules for targets named spdlog
+
+# Build rule for target.
+spdlog: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 spdlog
+.PHONY : spdlog
+
+# fast build rule for target.
+spdlog/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/spdlog-build/CMakeFiles/spdlog.dir/build.make _deps/spdlog-build/CMakeFiles/spdlog.dir/build
+.PHONY : spdlog/fast
+
 src/Chip8.o: src/Chip8.cpp.o
 .PHONY : src/Chip8.o
 
@@ -234,6 +247,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... chip8"
+	@echo "... spdlog"
 	@echo "... src/Chip8.o"
 	@echo "... src/Chip8.i"
 	@echo "... src/Chip8.s"

@@ -29,16 +29,12 @@ Display::~Display() {
     SDL_Quit();
 }
 
-void Display::setPixel(int x, int y, bool on) {
+bool Display::invertPixel(int x, int y) {
     x %= DISPLAY_WIDTH;
     y %= DISPLAY_HEIGHT;
-    m_frameBuffer[y * DISPLAY_WIDTH + x] = on;
-}
-
-bool Display::getPixel(int x, int y) const {
-    x %= DISPLAY_WIDTH;
-    y %= DISPLAY_HEIGHT;
-    return m_frameBuffer[y * DISPLAY_WIDTH + x];
+    bool& pixel = m_frameBuffer[y * DISPLAY_WIDTH + x];
+    pixel = !pixel;
+    return !pixel;
 }
 
 void Display::clear() {

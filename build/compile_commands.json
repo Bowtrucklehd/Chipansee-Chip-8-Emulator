@@ -1,26 +1,68 @@
 [
 {
   "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build",
-  "command": "/usr/bin/c++  -I/opt/homebrew/Cellar/sdl2/2.32.10/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/chip8.dir/src/main.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/main.cpp",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/opt/homebrew/Cellar/sdl2/2.32.10/include -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/chip8.dir/src/main.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/main.cpp",
   "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/main.cpp",
   "output": "CMakeFiles/chip8.dir/src/main.cpp.o"
 },
 {
   "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build",
-  "command": "/usr/bin/c++  -I/opt/homebrew/Cellar/sdl2/2.32.10/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/chip8.dir/src/Display.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Display.cpp",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/opt/homebrew/Cellar/sdl2/2.32.10/include -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/chip8.dir/src/Display.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Display.cpp",
   "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Display.cpp",
   "output": "CMakeFiles/chip8.dir/src/Display.cpp.o"
 },
 {
   "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build",
-  "command": "/usr/bin/c++  -I/opt/homebrew/Cellar/sdl2/2.32.10/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/chip8.dir/src/Input.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Input.cpp",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/opt/homebrew/Cellar/sdl2/2.32.10/include -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/chip8.dir/src/Input.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Input.cpp",
   "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Input.cpp",
   "output": "CMakeFiles/chip8.dir/src/Input.cpp.o"
 },
 {
   "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build",
-  "command": "/usr/bin/c++  -I/opt/homebrew/Cellar/sdl2/2.32.10/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/chip8.dir/src/Chip8.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Chip8.cpp",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/opt/homebrew/Cellar/sdl2/2.32.10/include -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -isystem /opt/homebrew/Cellar/sdl2/2.32.10/include/SDL2 -g -std=gnu++20 -arch arm64 -o CMakeFiles/chip8.dir/src/Chip8.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Chip8.cpp",
   "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/src/Chip8.cpp",
   "output": "CMakeFiles/chip8.dir/src/Chip8.cpp.o"
+},
+{
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-build",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -g -std=c++20 -arch arm64 -o CMakeFiles/spdlog.dir/src/spdlog.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/spdlog.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/spdlog.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/spdlog.cpp.o"
+},
+{
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-build",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -g -std=c++20 -arch arm64 -o CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/stdout_sinks.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/stdout_sinks.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o"
+},
+{
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-build",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -g -std=c++20 -arch arm64 -o CMakeFiles/spdlog.dir/src/color_sinks.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/color_sinks.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/color_sinks.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/color_sinks.cpp.o"
+},
+{
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-build",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -g -std=c++20 -arch arm64 -o CMakeFiles/spdlog.dir/src/file_sinks.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/file_sinks.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/file_sinks.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/file_sinks.cpp.o"
+},
+{
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-build",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -g -std=c++20 -arch arm64 -o CMakeFiles/spdlog.dir/src/async.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/async.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/async.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/async.cpp.o"
+},
+{
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-build",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -g -std=c++20 -arch arm64 -o CMakeFiles/spdlog.dir/src/cfg.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/cfg.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/cfg.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/cfg.cpp.o"
+},
+{
+  "directory": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-build",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -I/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/include -g -std=c++20 -arch arm64 -o CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.o -c /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/bundled_fmtlib_format.cpp",
+  "file": "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-src/src/bundled_fmtlib_format.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.o"
 }
 ]

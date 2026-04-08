@@ -144,6 +144,7 @@ chip8: CMakeFiles/chip8.dir/src/Input.cpp.o
 chip8: CMakeFiles/chip8.dir/src/Chip8.cpp.o
 chip8: CMakeFiles/chip8.dir/build.make
 chip8: /opt/homebrew/Cellar/sdl2/2.32.10/lib/libSDL2.dylib
+chip8: _deps/spdlog-build/libspdlogd.a
 chip8: CMakeFiles/chip8.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable chip8"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/chip8.dir/link.txt --verbose=$(VERBOSE)

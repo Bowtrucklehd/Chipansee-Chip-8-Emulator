@@ -10,6 +10,14 @@ list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew" "/usr/local")
 
 find_package(SDL2 REQUIRED)
 
+include(FetchContent)
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    GIT_TAG        v1.14.1
+)
+FetchContent_MakeAvailable(spdlog)
+
 add_executable(chip8
     src/main.cpp
     src/Display.cpp
@@ -18,4 +26,4 @@ add_executable(chip8
 )
 
 target_include_directories(chip8 PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(chip8 PRIVATE ${SDL2_LIBRARIES})
+target_link_libraries(chip8 PRIVATE ${SDL2_LIBRARIES} spdlog::spdlog)

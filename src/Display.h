@@ -15,8 +15,7 @@ public:
     Display(const Display&)            = delete;
     Display& operator=(const Display&) = delete;
 
-    void setPixel(int x, int y, bool on);
-    bool getPixel(int x, int y) const;
+    bool invertPixel(int x, int y);
     void clear();
     void render();
 

@@ -3,7 +3,7 @@
 #include "Input.h"
 
 #include <SDL2/SDL.h>
-#include <iostream>
+#include <spdlog/spdlog.h>
 #include <stdexcept>
 
 static constexpr int PIXEL_SCALE    = 10;
@@ -12,8 +12,11 @@ static constexpr int TIMER_HZ       = 60;
 static constexpr int CYCLES_PER_FRAME = CPU_HZ / TIMER_HZ;  // ~8 cycles per frame
 
 int main(int argc, char* argv[]) {
+    spdlog::set_pattern("[%H:%M:%S.%e] [%^%-5l%$] %v");
+    spdlog::set_level(spdlog::level::debug);
+
     if (argc < 2) {
-        std::cerr << "Usage: chip8 <rom_path>\n";
+        spdlog::error("Usage: chip8 <rom_path>");
         return 1;
     }
 
@@ -22,7 +25,7 @@ int main(int argc, char* argv[]) {
         Input   input;
         Chip8   chip8(display, input);
 
-        chip8.loadROM(argv[1]);
+        chip8.loadRom(argv[1]);
 
         const uint32_t frameMs = 1000 / TIMER_HZ;
 
@@ -34,10 +37,7 @@ int main(int argc, char* argv[]) {
 
             for (int i = 0; i < CYCLES_PER_FRAME; ++i)
                 chip8.cycle();
-
-            if (chip8.delayTimer > 0) --chip8.delayTimer;
-            if (chip8.soundTimer > 0) --chip8.soundTimer;
-
+            
             display.render();
 
             uint32_t elapsed = SDL_GetTicks() - frameStart;
@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
         }
 
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << "\n";
+        spdlog::error("{}", e.what());
         return 1;
     }
 

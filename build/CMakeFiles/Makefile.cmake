@@ -10,6 +10,9 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/CMakeLists.txt"
   "CMakeFiles/4.3.1/CMakeCXXCompiler.cmake"
   "CMakeFiles/4.3.1/CMakeSystem.cmake"
+  "_deps/spdlog-src/CMakeLists.txt"
+  "_deps/spdlog-src/cmake/ide.cmake"
+  "_deps/spdlog-src/cmake/utils.cmake"
   "/opt/homebrew/lib/cmake/SDL2/sdl2-config-version.cmake"
   "/opt/homebrew/lib/cmake/SDL2/sdl2-config.cmake"
   "/opt/homebrew/share/cmake/Modules/CMakeCXXInformation.cmake"
@@ -19,13 +22,25 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/homebrew/share/cmake/Modules/CMakeLanguageInformation.cmake"
   "/opt/homebrew/share/cmake/Modules/CMakeSystemSpecificInformation.cmake"
   "/opt/homebrew/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake"
+  "/opt/homebrew/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+  "/opt/homebrew/share/cmake/Modules/CheckIncludeFileCXX.cmake"
+  "/opt/homebrew/share/cmake/Modules/CheckLibraryExists.cmake"
   "/opt/homebrew/share/cmake/Modules/Compiler/AppleClang-CXX.cmake"
   "/opt/homebrew/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
   "/opt/homebrew/share/cmake/Modules/Compiler/Clang.cmake"
   "/opt/homebrew/share/cmake/Modules/Compiler/GNU.cmake"
+  "/opt/homebrew/share/cmake/Modules/ExternalProject/shared_internal_commands.cmake"
   "/opt/homebrew/share/cmake/Modules/FeatureSummary.cmake"
+  "/opt/homebrew/share/cmake/Modules/FetchContent.cmake"
+  "/opt/homebrew/share/cmake/Modules/FetchContent/CMakeLists.cmake.in"
+  "/opt/homebrew/share/cmake/Modules/FindGit.cmake"
+  "/opt/homebrew/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+  "/opt/homebrew/share/cmake/Modules/FindPackageMessage.cmake"
+  "/opt/homebrew/share/cmake/Modules/FindThreads.cmake"
+  "/opt/homebrew/share/cmake/Modules/GNUInstallDirs.cmake"
   "/opt/homebrew/share/cmake/Modules/Internal/CMakeCXXLinkerInformation.cmake"
   "/opt/homebrew/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake"
+  "/opt/homebrew/share/cmake/Modules/Internal/CheckSourceCompiles.cmake"
   "/opt/homebrew/share/cmake/Modules/Linker/AppleClang-CXX.cmake"
   "/opt/homebrew/share/cmake/Modules/Linker/AppleClang.cmake"
   "/opt/homebrew/share/cmake/Modules/Platform/Apple-AppleClang-CXX.cmake"
@@ -46,10 +61,13 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
+  "_deps/spdlog-subbuild/CMakeLists.txt"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
+  "_deps/spdlog-build/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/chip8.dir/DependInfo.cmake"
+  "_deps/spdlog-build/CMakeFiles/spdlog.dir/DependInfo.cmake"
   )
