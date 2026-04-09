@@ -78,7 +78,6 @@ void Chip8::send_vertical_blank_interrupt() {
 
 uint16_t Chip8::fetch() {
         uint16_t opcode = (uint16_t) memory[pc] << 8 | memory[pc+1];
-        spdlog::debug("pc={:#05x} opcode={:#06x}", pc, opcode);
         pc+=2;
         return opcode;
 }
@@ -154,20 +153,22 @@ bool Chip8::execute(Instruction instruction) {
                                 case 0x1:
                                         variable_register[instruction.x] = variable_register[instruction.x] | variable_register[instruction.y];
                                         if(config.vf_reset_quirk) {
-                                                variable_register[0xF] = 0;     
+                                                spdlog::debug("[vf_reset] OR V{:X}={:#04x} — VF reset to 0", instruction.x, variable_register[instruction.x]);
+                                                variable_register[0xF] = 0;
                                         }
                                         break;
                                 case 0x2:
                                         variable_register[instruction.x] = variable_register[instruction.x] & variable_register[instruction.y];
                                         if(config.vf_reset_quirk) {
-                                                variable_register[0xF] = 0;     
+                                                spdlog::debug("[vf_reset] AND V{:X}={:#04x} — VF reset to 0", instruction.x, variable_register[instruction.x]);
+                                                variable_register[0xF] = 0;
                                         }
                                         break;
-                                
                                 case 0x3:
                                         variable_register[instruction.x] = variable_register[instruction.x] ^ variable_register[instruction.y];
                                         if(config.vf_reset_quirk) {
-                                                variable_register[0xF] = 0;     
+                                                spdlog::debug("[vf_reset] XOR V{:X}={:#04x} — VF reset to 0", instruction.x, variable_register[instruction.x]);
+                                                variable_register[0xF] = 0;
                                         }
                                         break;
                                 
@@ -187,15 +188,18 @@ bool Chip8::execute(Instruction instruction) {
                                         variable_register[0xF] = noBorrow ? 1 : 0;
                                         break;
                                 }
-                                case 0x6:  {      
+                                case 0x6: {
                                         if(!config.shifting_quirk) {
+                                                spdlog::debug("[shifting] SHR: V{:X}=V{:X}={:#04x} (copy source)", instruction.x, instruction.y, variable_register[instruction.y]);
                                                 variable_register[instruction.x] = variable_register[instruction.y];
+                                        } else {
+                                                spdlog::debug("[shifting] SHR: V{:X}={:#04x} (shift in-place)", instruction.x, variable_register[instruction.x]);
                                         }
                                         uint8_t least_significant_bit = variable_register[instruction.x] & 0x01;
                                         variable_register[instruction.x] >>= 1;
                                         variable_register[0xF] = least_significant_bit;
-                                        break;          
-                                }          
+                                        break;
+                                }
                                 case 0x7: {
                                         uint8_t vx = variable_register[instruction.x];
                                         uint8_t vy = variable_register[instruction.y];
@@ -206,7 +210,10 @@ bool Chip8::execute(Instruction instruction) {
                                 }
                                 case 0xE: {
                                         if(!config.shifting_quirk) {
+                                                spdlog::debug("[shifting] SHL: V{:X}=V{:X}={:#04x} (copy source)", instruction.x, instruction.y, variable_register[instruction.y]);
                                                 variable_register[instruction.x] = variable_register[instruction.y];
+                                        } else {
+                                                spdlog::debug("[shifting] SHL: V{:X}={:#04x} (shift in-place)", instruction.x, variable_register[instruction.x]);
                                         }
                                         uint8_t most_significant_bit = variable_register[instruction.x] >> 7;
                                         variable_register[instruction.x] <<= 1;
@@ -227,8 +234,10 @@ bool Chip8::execute(Instruction instruction) {
                         break;
                 case 0xB:
                         if(!config.jumping_quirk) {
+                                spdlog::debug("[jumping] JUMP V0: pc={:#05x}+V0({:#04x})={:#05x}", instruction.NNN, variable_register[0x0], instruction.NNN + variable_register[0x0]);
                                 pc = instruction.NNN + variable_register[0x0];
                         } else {
+                                spdlog::debug("[jumping] JUMP VX: pc={:#05x}+V{:X}({:#04x})={:#05x}", instruction.NNN, instruction.x, variable_register[instruction.x], instruction.NNN + variable_register[instruction.x]);
                                 pc = instruction.NNN + variable_register[instruction.x];
                         }
                         break;
@@ -240,9 +249,11 @@ bool Chip8::execute(Instruction instruction) {
                 case 0xD: {
                         if(config.display_wait_quirk) {
                                 if(!vertical_blank_interrupt) {
+                                        spdlog::debug("[display_wait] draw stalled — waiting for vblank at pc={:#05x}", pc - 2);
                                         pc -= 2;
                                         return true;
                                 } else {
+                                        spdlog::debug("[display_wait] vblank received — proceeding with draw");
                                         vertical_blank_interrupt = false;
                                 }
                         }
@@ -264,6 +275,8 @@ bool Chip8::execute(Instruction instruction) {
                                         int py = config.clipping_quirk
                                                 ? y_start + y_offset
                                                 : (y_start + y_offset) % display.height();
+                                        if (!config.clipping_quirk && (x_start + x_offset >= display.width() || y_start + y_offset >= display.height()))
+                                                spdlog::debug("[clipping] WRAP pixel ({},{}) -> ({},{})", x_start + x_offset, y_start + y_offset, px, py);
 
                                         if (display.invertPixel(px, py))
                                                 variable_register[0xF] = 1;
@@ -324,16 +337,22 @@ bool Chip8::execute(Instruction instruction) {
                                         for(int i = 0; i <= instruction.x; i++) {
                                                 memory[index + i] = variable_register[i];
                                         }
-                                        if(!config.memory_quirk) {
+                                        if(config.memory_quirk) {
+                                                spdlog::debug("[memory] STORE: I advanced from {:#05x} to {:#05x}", index, index + instruction.x + 1);
                                                 index += instruction.x + 1;
+                                        } else {
+                                                spdlog::debug("[memory] STORE: I unchanged at {:#05x}", index);
                                         }
                                         break;
                                 case 0x65:
                                         for(int i = 0; i <= instruction.x; i++) {
                                                 variable_register[i] = memory[index + i];
                                         }
-                                        if(!config.memory_quirk) {
+                                        if(config.memory_quirk) {
+                                                spdlog::debug("[memory] LOAD: I advanced from {:#05x} to {:#05x}", index, index + instruction.x + 1);
                                                 index += instruction.x + 1;
+                                        } else {
+                                                spdlog::debug("[memory] LOAD: I unchanged at {:#05x}", index);
                                         }
                                         break;
                                 default:
