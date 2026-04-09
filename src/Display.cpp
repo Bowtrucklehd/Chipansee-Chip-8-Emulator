@@ -3,7 +3,9 @@
 #include <stdexcept>
 #include <string>
 
-Display::Display(int pixelScale) : m_scale(pixelScale) {
+Display::Display(int width, int height, int pixelScale)
+    : m_width(width), m_height(height), m_scale(pixelScale),
+      m_frameBuffer(width * height, false) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
         throw std::runtime_error(std::string("SDL_Init failed: ") + SDL_GetError());
 
@@ -11,8 +13,8 @@ Display::Display(int pixelScale) : m_scale(pixelScale) {
         "CHIP-8 Emulator",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
-        DISPLAY_WIDTH  * m_scale,
-        DISPLAY_HEIGHT * m_scale,
+        m_width  * m_scale,
+        m_height * m_scale,
         SDL_WINDOW_SHOWN
     );
     if (!m_window)
@@ -30,16 +32,15 @@ Display::~Display() {
 }
 
 bool Display::invertPixel(int x, int y) {
-    if (x < 0 || y < 0 || x >= DISPLAY_WIDTH || y >= DISPLAY_HEIGHT)
+    if (x < 0 || y < 0 || x >= m_width || y >= m_height)
         return false;
-    bool& pixel = m_frameBuffer[y * DISPLAY_WIDTH + x];
-    bool collision = pixel;
-    pixel = !pixel;
-    return collision;
+    bool current = m_frameBuffer[y * m_width + x];
+    m_frameBuffer[y * m_width + x] = !current;
+    return current;
 }
 
 void Display::clear() {
-    m_frameBuffer.fill(false);
+    std::fill(m_frameBuffer.begin(), m_frameBuffer.end(), false);
 }
 
 void Display::render() {
@@ -48,9 +49,9 @@ void Display::render() {
 
     SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
 
-    for (int y = 0; y < DISPLAY_HEIGHT; ++y) {
-        for (int x = 0; x < DISPLAY_WIDTH; ++x) {
-            if (!m_frameBuffer[y * DISPLAY_WIDTH + x])
+    for (int y = 0; y < m_height; ++y) {
+        for (int x = 0; x < m_width; ++x) {
+            if (!m_frameBuffer[y * m_width + x])
                 continue;
 
             SDL_Rect pixel{x * m_scale, y * m_scale, m_scale, m_scale};

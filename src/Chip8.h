@@ -9,9 +9,17 @@
 
 
 struct Chip8Config {
-        bool modern_shift; // this flag sets if the shift operation will follow the original CHIP 8 or new CHIP8 versions;
-        bool modern_b_instruction;
-        bool modern_index_incrementation;
+        int display_width;
+        int display_height;
+        int cycles_per_second;
+        int frames_per_second;
+
+        bool vf_reset_quirk;
+        bool memory_quirk;
+        bool display_wait_quirk;
+        bool clipping_quirk;
+        bool shifting_quirk;
+        bool jumping_quirk;
 };
 
 struct Instruction {
@@ -35,6 +43,10 @@ class Chip8 {
 
                 void decrement_delay();
                 void decrement_sound();
+
+                bool get_draw_flag();
+                void set_draw_flag(bool value);
+                void send_vertical_blank_interrupt();
         private:
                 uint16_t fetch();
                 Instruction decode(uint16_t opcode);
@@ -51,4 +63,7 @@ class Chip8 {
                 std::stack<uint16_t> stack;
                 uint8_t delay_timer;
                 uint8_t sound_timer;
+
+                bool draw_flag;
+                bool vertical_blank_interrupt;
 };

@@ -3,32 +3,35 @@
 #include "Input.h"
 
 #include <SDL2/SDL.h>
+#include <chrono>
 #include <spdlog/spdlog.h>
 #include <stdexcept>
 
-static constexpr int PIXEL_SCALE      = 10;
-static constexpr int CPU_HZ           = 500;
-static constexpr int TIMER_HZ         = 60;
-static constexpr int CYCLES_PER_FRAME = CPU_HZ / TIMER_HZ;
+static constexpr int PIXEL_SCALE              = 10;
+static constexpr int MICROSECONDS_IN_A_SECOND = 1000000;
 
-static Chip8Config ORIGINAL  = { .modern_shift = false, .modern_b_instruction = false, .modern_index_incrementation = false };
-static Chip8Config CHIP48    = { .modern_shift = true,  .modern_b_instruction = true,  .modern_index_incrementation = true  };
-static Chip8Config SUPERCHIP = { .modern_shift = true,  .modern_b_instruction = true,  .modern_index_incrementation = true  };
+static Chip8Config ORIGINAL   = { .display_width = 64, .display_height = 32, .cycles_per_second = 500,  .frames_per_second = 60, .vf_reset_quirk = true,  .memory_quirk = false, .display_wait_quirk = true,  .clipping_quirk = true,  .shifting_quirk = false, .jumping_quirk = false };
+static Chip8Config CHIP48     = { .display_width = 64, .display_height = 32, .cycles_per_second = 500,  .frames_per_second = 60, .vf_reset_quirk = true,  .memory_quirk = true,  .display_wait_quirk = true,  .clipping_quirk = true,  .shifting_quirk = true,  .jumping_quirk = true  };
+static Chip8Config SUPERCHIP  = { .display_width = 64, .display_height = 32, .cycles_per_second = 1000, .frames_per_second = 60, .vf_reset_quirk = false, .memory_quirk = true,  .display_wait_quirk = false, .clipping_quirk = false, .shifting_quirk = true,  .jumping_quirk = true  };
+static Chip8Config ALL_QUIRKS = { .display_width = 64, .display_height = 32, .cycles_per_second = 500,  .frames_per_second = 60, .vf_reset_quirk = true,  .memory_quirk = true,  .display_wait_quirk = true,  .clipping_quirk = true,  .shifting_quirk = true,  .jumping_quirk = true  };
+static Chip8Config NO_QUIRKS  = { .display_width = 64, .display_height = 32, .cycles_per_second = 500,  .frames_per_second = 60, .vf_reset_quirk = false, .memory_quirk = false, .display_wait_quirk = false, .clipping_quirk = false, .shifting_quirk = false, .jumping_quirk = false };
 
 int main(int argc, char* argv[]) {
     spdlog::set_pattern("[%H:%M:%S.%e] [%^%-5l%$] %v");
     spdlog::set_level(spdlog::level::debug);
 
     if (argc < 2) {
-        spdlog::error("Usage: chip8 <rom_path> [original|chip48|superchip]");
+        spdlog::error("Usage: chip8 <rom_path> [original|chip48|superchip|all_quirks|no_quirks]");
         return 1;
     }
 
     Chip8Config* config = &ORIGINAL;
     if (argc >= 3) {
         std::string mode = argv[2];
-        if      (mode == "chip48")    config = &CHIP48;
-        else if (mode == "superchip") config = &SUPERCHIP;
+        if      (mode == "chip48")     config = &CHIP48;
+        else if (mode == "superchip")  config = &SUPERCHIP;
+        else if (mode == "all_quirks") config = &ALL_QUIRKS;
+        else if (mode == "no_quirks")  config = &NO_QUIRKS;
         else if (mode != "original") {
             spdlog::warn("Unknown mode '{}', defaulting to original", mode);
         }
@@ -36,28 +39,41 @@ int main(int argc, char* argv[]) {
     spdlog::info("Mode: {}", argc >= 3 ? argv[2] : "original");
 
     try {
-        Display display(PIXEL_SCALE);
+        Display display(config->display_width, config->display_height, PIXEL_SCALE);
         Input   input;
         Chip8   chip8(display, input, *config);
 
         chip8.loadRom(argv[1]);
 
-        const uint32_t frameMs = 1000 / TIMER_HZ;
+        auto lastCycle = std::chrono::high_resolution_clock::now();
+        auto lastTimer = std::chrono::high_resolution_clock::now();
+        auto lastFrame = std::chrono::high_resolution_clock::now();
 
         while (true) {
-            uint32_t frameStart = SDL_GetTicks();
+            auto now = std::chrono::high_resolution_clock::now();
 
             if (!input.pollEvents())
                 break;
 
-            for (int i = 0; i < CYCLES_PER_FRAME; ++i)
+            if (now - lastCycle >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / config->cycles_per_second)) {
                 chip8.cycle();
-            
-            display.render();
+                lastCycle = now;
+            }
 
-            uint32_t elapsed = SDL_GetTicks() - frameStart;
-            if (elapsed < frameMs)
-                SDL_Delay(frameMs - elapsed);
+            if (now - lastFrame >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / config->frames_per_second)) {
+                if (chip8.get_draw_flag()) {
+                    chip8.send_vertical_blank_interrupt();
+                    display.render();
+                    chip8.set_draw_flag(false);
+                }
+                lastFrame = now;
+            }
+
+            if (now - lastTimer >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / config->frames_per_second)) {
+                chip8.decrement_delay();
+                chip8.decrement_sound();
+                lastTimer = now;
+            }
         }
 
     } catch (const std::exception& e) {

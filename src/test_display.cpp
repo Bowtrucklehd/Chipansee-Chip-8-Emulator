@@ -6,11 +6,11 @@
 int main() {
     spdlog::set_pattern("[%H:%M:%S.%e] [%^%-5l%$] %v");
 
-    Display display(10);
+    Display display(64, 32, 10);
 
     // out-of-bounds returns false without drawing
-    assert(display.invertPixel(64, 0)  == false);
-    assert(display.invertPixel(0, 32)  == false);
+    assert(display.invertPixel(display.width(), 0)  == false);
+    assert(display.invertPixel(0, display.height())  == false);
     assert(display.invertPixel(99, 99) == false);
     spdlog::info("PASS: out-of-bounds returns false");
 
@@ -33,7 +33,7 @@ int main() {
 
     // visual check — draw a circle using midpoint circle algorithm
     display.clear();
-    int cx = DISPLAY_WIDTH / 2, cy = DISPLAY_HEIGHT / 2, r = 12;
+    int cx = display.width() / 2, cy = display.height() / 2, r = 12;
     int x = 0, y = r, d = 1 - r;
     auto plot = [&](int px, int py) { display.invertPixel(cx + px, cy + py); };
     while (x <= y) {

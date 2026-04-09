@@ -1,15 +1,12 @@
 #pragma once
 
 #include <SDL2/SDL.h>
-#include <array>
 #include <cstdint>
-
-static constexpr int DISPLAY_WIDTH  = 64;
-static constexpr int DISPLAY_HEIGHT = 32;
+#include <vector>
 
 class Display {
 public:
-    explicit Display(int pixelScale);
+    explicit Display(int width, int height, int pixelScale);
     ~Display();
 
     Display(const Display&)            = delete;
@@ -19,9 +16,14 @@ public:
     void clear();
     void render();
 
+    int width()  const { return m_width; }
+    int height() const { return m_height; }
+
 private:
+    int m_width;
+    int m_height;
     int m_scale;
-    std::array<bool, DISPLAY_WIDTH * DISPLAY_HEIGHT> m_frameBuffer{};
+    std::vector<bool> m_frameBuffer;
 
     SDL_Window*   m_window   = nullptr;
     SDL_Renderer* m_renderer = nullptr;

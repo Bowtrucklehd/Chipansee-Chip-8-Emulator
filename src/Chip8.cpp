@@ -52,8 +52,33 @@ void Chip8::cycle() {
         execute(instruction);
 };
 
+void Chip8::decrement_delay() {
+        if(delay_timer>0) {
+                delay_timer--;
+        }
+}
+
+void Chip8::decrement_sound() {
+        if(delay_timer>0) {
+                sound_timer--;
+        }
+}
+
+bool Chip8::get_draw_flag() {
+        return draw_flag;
+}
+
+void Chip8::set_draw_flag(bool value) {
+        draw_flag = value;
+}
+
+void Chip8::send_vertical_blank_interrupt() {
+        vertical_blank_interrupt = true;
+}
+
 uint16_t Chip8::fetch() {
         uint16_t opcode = (uint16_t) memory[pc] << 8 | memory[pc+1];
+        spdlog::debug("pc={:#05x} opcode={:#06x}", pc, opcode);
         pc+=2;
         return opcode;
 }
@@ -76,6 +101,7 @@ bool Chip8::execute(Instruction instruction) {
                         switch(instruction.NN) {
                                 case 0xE0:
                                         display.clear();
+                                        draw_flag = true;
                                         break;
                                 case 0xEE:
                                         if (stack.empty())
@@ -127,13 +153,22 @@ bool Chip8::execute(Instruction instruction) {
                                         break;
                                 case 0x1:
                                         variable_register[instruction.x] = variable_register[instruction.x] | variable_register[instruction.y];
+                                        if(config.vf_reset_quirk) {
+                                                variable_register[0xF] = 0;     
+                                        }
                                         break;
                                 case 0x2:
                                         variable_register[instruction.x] = variable_register[instruction.x] & variable_register[instruction.y];
+                                        if(config.vf_reset_quirk) {
+                                                variable_register[0xF] = 0;     
+                                        }
                                         break;
                                 
                                 case 0x3:
                                         variable_register[instruction.x] = variable_register[instruction.x] ^ variable_register[instruction.y];
+                                        if(config.vf_reset_quirk) {
+                                                variable_register[0xF] = 0;     
+                                        }
                                         break;
                                 
                                 case 0x4: {
@@ -153,13 +188,12 @@ bool Chip8::execute(Instruction instruction) {
                                         break;
                                 }
                                 case 0x6:  {      
-                                        if(!config.modern_shift) {
+                                        if(!config.shifting_quirk) {
                                                 variable_register[instruction.x] = variable_register[instruction.y];
                                         }
                                         uint8_t least_significant_bit = variable_register[instruction.x] & 0x01;
                                         variable_register[instruction.x] >>= 1;
                                         variable_register[0xF] = least_significant_bit;
-                                        spdlog::debug("lsb: {}", least_significant_bit);
                                         break;          
                                 }          
                                 case 0x7: {
@@ -171,7 +205,7 @@ bool Chip8::execute(Instruction instruction) {
                                         break;
                                 }
                                 case 0xE: {
-                                        if(!config.modern_shift) {
+                                        if(!config.shifting_quirk) {
                                                 variable_register[instruction.x] = variable_register[instruction.y];
                                         }
                                         uint8_t most_significant_bit = variable_register[instruction.x] >> 7;
@@ -180,7 +214,6 @@ bool Chip8::execute(Instruction instruction) {
                                         break;
                                 }
                                 default:
-                                        spdlog::warn("unknown 8XYN opcode: {:#06x}", instruction.full_opcode);
                                         break;
                         }
                         break;
@@ -193,7 +226,7 @@ bool Chip8::execute(Instruction instruction) {
                         index = instruction.NNN;
                         break;
                 case 0xB:
-                        if(!config.modern_b_instruction) {
+                        if(!config.jumping_quirk) {
                                 pc = instruction.NNN + variable_register[0x0];
                         } else {
                                 pc = instruction.NNN + variable_register[instruction.x];
@@ -205,28 +238,38 @@ bool Chip8::execute(Instruction instruction) {
                         break;
                 }
                 case 0xD: {
-                        uint16_t x_coordinate = variable_register[instruction.x] % (DISPLAY_WIDTH-1);
-                        uint16_t y_coordinate = variable_register[instruction.y] % (DISPLAY_HEIGHT-1);
-                        uint16_t height = instruction.N;
-                        uint16_t sprite_adress = index;
-
-                        variable_register[0xF] = 0;
-                        for(int y_offset = 0; y_offset<height; y_offset++) {
-                                uint8_t sprite_byte = memory[sprite_adress + y_offset];
-                                for(int x_offset = 0; x_offset < 8; x_offset++) {
-                                        bool pixel = (sprite_byte >> (7 - x_offset)) & 0x01;  // ✅ isolate the bit
-                                        if (pixel == 0) {
-                                                continue;
-                                        }
-
-                                        bool collision = display.invertPixel(x_coordinate + x_offset, y_coordinate + y_offset);
-
-                                        if(collision) {
-                                                variable_register[0xF] = collision;
-                                        }
+                        if(config.display_wait_quirk) {
+                                if(!vertical_blank_interrupt) {
+                                        pc -= 2;
+                                        return true;
+                                } else {
+                                        vertical_blank_interrupt = false;
                                 }
                         }
+                        uint8_t x_start = variable_register[instruction.x] % display.width();
+                        uint8_t y_start = variable_register[instruction.y] % display.height();
+                        uint16_t height = instruction.N;
 
+                        variable_register[0xF] = 0;
+                        for (int y_offset = 0; y_offset < height; y_offset++) {
+                                uint8_t sprite_byte = memory[index + y_offset];
+                                for (int x_offset = 0; x_offset < 8; x_offset++) {
+                                        bool pixel = (sprite_byte >> (7 - x_offset)) & 0x01;
+                                        if (!pixel)
+                                                continue;
+
+                                        int px = config.clipping_quirk
+                                                ? x_start + x_offset
+                                                : (x_start + x_offset) % display.width();
+                                        int py = config.clipping_quirk
+                                                ? y_start + y_offset
+                                                : (y_start + y_offset) % display.height();
+
+                                        if (display.invertPixel(px, py))
+                                                variable_register[0xF] = 1;
+                                }
+                        }
+                        draw_flag = true;
                         break;
                 }
                 case 0xE:
@@ -281,7 +324,7 @@ bool Chip8::execute(Instruction instruction) {
                                         for(int i = 0; i <= instruction.x; i++) {
                                                 memory[index + i] = variable_register[i];
                                         }
-                                        if(!config.modern_index_incrementation) {
+                                        if(!config.memory_quirk) {
                                                 index += instruction.x + 1;
                                         }
                                         break;
@@ -289,7 +332,7 @@ bool Chip8::execute(Instruction instruction) {
                                         for(int i = 0; i <= instruction.x; i++) {
                                                 variable_register[i] = memory[index + i];
                                         }
-                                        if(!config.modern_index_incrementation) {
+                                        if(!config.memory_quirk) {
                                                 index += instruction.x + 1;
                                         }
                                         break;
