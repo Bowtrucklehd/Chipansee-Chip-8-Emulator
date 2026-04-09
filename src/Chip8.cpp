@@ -152,13 +152,16 @@ bool Chip8::execute(Instruction instruction) {
                                         variable_register[0xF] = noBorrow ? 1 : 0;
                                         break;
                                 }
-                                case 0x6:        
+                                case 0x6:  {      
                                         if(!config.modern_shift) {
                                                 variable_register[instruction.x] = variable_register[instruction.y];
                                         }
-                                        variable_register[0xF] = variable_register[instruction.x] | 0x0001;
+                                        uint8_t least_significant_bit = variable_register[instruction.x] & 0x01;
                                         variable_register[instruction.x] >>= 1;
-                                        break;                    
+                                        variable_register[0xF] = least_significant_bit;
+                                        spdlog::debug("lsb: {}", least_significant_bit);
+                                        break;          
+                                }          
                                 case 0x7: {
                                         uint8_t vx = variable_register[instruction.x];
                                         uint8_t vy = variable_register[instruction.y];
@@ -167,13 +170,15 @@ bool Chip8::execute(Instruction instruction) {
                                         variable_register[0xF] = noBorrow ? 1 : 0;
                                         break;
                                 }
-                                case 0xE:
+                                case 0xE: {
                                         if(!config.modern_shift) {
                                                 variable_register[instruction.x] = variable_register[instruction.y];
                                         }
-                                        variable_register[0xF] = (variable_register[instruction.x] | 0x8000) >> 15;
+                                        uint8_t most_significant_bit = variable_register[instruction.x] >> 7;
                                         variable_register[instruction.x] <<= 1;
+                                        variable_register[0xF] = most_significant_bit;
                                         break;
+                                }
                                 default:
                                         spdlog::warn("unknown 8XYN opcode: {:#06x}", instruction.full_opcode);
                                         break;
