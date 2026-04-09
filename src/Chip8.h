@@ -64,6 +64,8 @@ class Chip8 {
                 uint8_t delay_timer;
                 uint8_t sound_timer;
 
+                bool key_was_down;
+
                 bool draw_flag;
                 bool vertical_blank_interrupt;
 };

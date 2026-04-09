@@ -8,7 +8,7 @@
 #include <spdlog/spdlog.h>
 #include <stdexcept>
 
-Chip8::Chip8(Display& display, Input& input, Chip8Config& config) : display(display), input(input), pc(0x200), config(config) {
+Chip8::Chip8(Display& display, Input& input, Chip8Config& config) : display(display), input(input), pc(0x200), config(config), key_was_down(false) {
         uint8_t font[80] = {
                 0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
                 0x20, 0x60, 0x20, 0x20, 0x70, // 1
@@ -319,9 +319,15 @@ bool Chip8::execute(Instruction instruction) {
                                 case 0x0A: {
                                         int pressed_key = input.getPressedKey();
                                         if(pressed_key == -1) {
-                                                pc-=2;
-                                        } else{
-                                                variable_register[instruction.x] = (uint8_t) pressed_key;
+                                                if(key_was_down) {
+                                                        variable_register[instruction.x] = (uint8_t) pressed_key;
+                                                        key_was_down = false;
+                                                } else {
+                                                        pc-=2; 
+                                                }
+                                        } else {
+                                                key_was_down = true;
+                                                pc -= 2;
                                         }
                                         break;
                                 }
