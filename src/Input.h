@@ -12,6 +12,7 @@ public:
 
     bool pollEvents();
     bool isKeyDown(uint8_t chip8Key) const;
+    int getPressedKey() const;
 
 private:
     std::array<bool, CHIP8_KEY_COUNT> m_keyState{};

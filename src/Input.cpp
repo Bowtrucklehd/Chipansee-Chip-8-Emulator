@@ -54,3 +54,11 @@ int Input::chip8KeyToIndex(SDL_Scancode scancode) {
         default:             return -1;
     }
 }
+
+int Input::getPressedKey() const {
+    for (int key = 0; key < CHIP8_KEY_COUNT; ++key) {
+        if (m_keyState[key])
+            return key;
+    }
+    return -1;
+}

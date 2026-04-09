@@ -8,7 +8,7 @@
 #include <spdlog/spdlog.h>
 #include <stdexcept>
 
-Chip8::Chip8(Display& display, Input& input) : display(display), input(input), pc(0x200) {
+Chip8::Chip8(Display& display, Input& input, Chip8Config& config) : display(display), input(input), pc(0x200), config(config) {
         uint8_t font[80] = {
                 0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
                 0x20, 0x60, 0x20, 0x20, 0x70, // 1
@@ -78,8 +78,12 @@ bool Chip8::execute(Instruction instruction) {
                                         display.clear();
                                         break;
                                 case 0xEE:
-                                        pc = stack.top();
-                                        stack.pop();
+                                        if (stack.empty())
+                                                spdlog::warn("stack underflow at pc={:#05x}", pc);
+                                        else {
+                                                pc = stack.top();
+                                                stack.pop();
+                                        }
                                         break;
                                 default:
                                         spdlog::warn("unknown opcode: {:#06x}", instruction.full_opcode);
@@ -90,6 +94,8 @@ bool Chip8::execute(Instruction instruction) {
                         pc = instruction.NNN;
                         break;
                 case 0x2:
+                        if (stack.size() >= 16)
+                                spdlog::warn("stack overflow at pc={:#05x}", pc);
                         stack.push(pc);
                         pc = instruction.NNN;
                         break;
@@ -99,8 +105,14 @@ bool Chip8::execute(Instruction instruction) {
                         }
                         break;
                 case 0x4:
+                        if(variable_register[instruction.x] != instruction.NN) {
+                                pc += 2;
+                        }
                         break;
                 case 0x5:
+                        if(variable_register[instruction.x] == variable_register[instruction.y]) {
+                                pc += 2;
+                        }
                         break;
                 case 0x6:
                         variable_register[instruction.x] = instruction.NN;
@@ -109,24 +121,89 @@ bool Chip8::execute(Instruction instruction) {
                         variable_register[instruction.x] += instruction.NN;
                         break;
                 case 0x8:
+                        switch (instruction.N) {
+                                case 0x0:
+                                        variable_register[instruction.x] = variable_register[instruction.y];
+                                        break;
+                                case 0x1:
+                                        variable_register[instruction.x] = variable_register[instruction.x] | variable_register[instruction.y];
+                                        break;
+                                case 0x2:
+                                        variable_register[instruction.x] = variable_register[instruction.x] & variable_register[instruction.y];
+                                        break;
+                                
+                                case 0x3:
+                                        variable_register[instruction.x] = variable_register[instruction.x] ^ variable_register[instruction.y];
+                                        break;
+                                
+                                case 0x4: {
+                                        uint8_t vx = variable_register[instruction.x];
+                                        uint8_t vy = variable_register[instruction.y];
+                                        bool overflow = (uint16_t)vx + vy > 0xFF;
+                                        variable_register[instruction.x] = vx + vy;
+                                        variable_register[0xF] = overflow ? 1 : 0;
+                                        break;
+                                }
+                                case 0x5: {
+                                        uint8_t vx = variable_register[instruction.x];
+                                        uint8_t vy = variable_register[instruction.y];
+                                        bool noBorrow = vx >= vy;
+                                        variable_register[instruction.x] = vx - vy;
+                                        variable_register[0xF] = noBorrow ? 1 : 0;
+                                        break;
+                                }
+                                case 0x6:        
+                                        if(!config.modern_shift) {
+                                                variable_register[instruction.x] = variable_register[instruction.y];
+                                        }
+                                        variable_register[0xF] = variable_register[instruction.x] | 0x0001;
+                                        variable_register[instruction.x] >>= 1;
+                                        break;                    
+                                case 0x7: {
+                                        uint8_t vx = variable_register[instruction.x];
+                                        uint8_t vy = variable_register[instruction.y];
+                                        bool noBorrow = vy >= vx;
+                                        variable_register[instruction.x] = vy - vx;
+                                        variable_register[0xF] = noBorrow ? 1 : 0;
+                                        break;
+                                }
+                                case 0xE:
+                                        if(!config.modern_shift) {
+                                                variable_register[instruction.x] = variable_register[instruction.y];
+                                        }
+                                        variable_register[0xF] = (variable_register[instruction.x] | 0x8000) >> 15;
+                                        variable_register[instruction.x] <<= 1;
+                                        break;
+                                default:
+                                        spdlog::warn("unknown 8XYN opcode: {:#06x}", instruction.full_opcode);
+                                        break;
+                        }
                         break;
                 case 0x9:
+                        if(variable_register[instruction.x] != variable_register[instruction.y]) {
+                                pc += 2;
+                        }
                         break;
                 case 0xA:
                         index = instruction.NNN;
                         break;
                 case 0xB:
+                        if(!config.modern_b_instruction) {
+                                pc = instruction.NNN + variable_register[0x0];
+                        } else {
+                                pc = instruction.NNN + variable_register[instruction.x];
+                        }
                         break;
-                case 0xC:
+                case 0xC: {
+                        uint8_t random = rand() % 256;
+                        variable_register[instruction.x] = random & instruction.NN;
                         break;
+                }
                 case 0xD: {
                         uint16_t x_coordinate = variable_register[instruction.x] % (DISPLAY_WIDTH-1);
                         uint16_t y_coordinate = variable_register[instruction.y] % (DISPLAY_HEIGHT-1);
                         uint16_t height = instruction.N;
                         uint16_t sprite_adress = index;
-
-                        spdlog::debug("DRAW sprite at ({},{}) height={} sprite_addr={:#05x} VF_before={}",
-                                x_coordinate, y_coordinate, height, sprite_adress, variable_register[0xF]);
 
                         variable_register[0xF] = 0;
                         for(int y_offset = 0; y_offset<height; y_offset++) {
@@ -134,13 +211,10 @@ bool Chip8::execute(Instruction instruction) {
                                 for(int x_offset = 0; x_offset < 8; x_offset++) {
                                         bool pixel = (sprite_byte >> (7 - x_offset)) & 0x01;  // ✅ isolate the bit
                                         if (pixel == 0) {
-                                                spdlog::debug("  pixel ({},{}) skipped (sprite byte=0)", x_coordinate + x_offset, y_coordinate + y_offset);
                                                 continue;
                                         }
 
                                         bool collision = display.invertPixel(x_coordinate + x_offset, y_coordinate + y_offset);
-                                        spdlog::debug("  pixel ({},{}) drawn sprite_byte={:#04x} collision={}",
-                                                x_coordinate + x_offset, y_coordinate + y_offset, sprite_byte, collision);
 
                                         if(collision) {
                                                 variable_register[0xF] = collision;
@@ -148,15 +222,79 @@ bool Chip8::execute(Instruction instruction) {
                                 }
                         }
 
-                        spdlog::debug("DRAW done VF={}", variable_register[0xF]);
                         break;
                 }
                 case 0xE:
+                        switch (instruction.NN) {
+                                case 0x9E:
+                                        if(input.isKeyDown(variable_register[instruction.x])) {
+                                                pc+=2;
+                                        }
+                                        break;
+                                case 0xA1:
+                                        if(!input.isKeyDown(variable_register[instruction.x])) {
+                                                pc+=2;
+                                        }
+                                        break;
+                                default:
+                                        spdlog::warn("unknown EXNN opcode: {:#06x}", instruction.full_opcode);
+                                        break;
+                        }
                         break;
                 case 0xF:
+                        switch (instruction.NN) {
+                                case 0x07:
+                                        variable_register[instruction.x] = delay_timer;
+                                        break;
+                                case 0x15:
+                                        delay_timer = variable_register[instruction.x];
+                                        break;
+                                case 0x18:
+                                        sound_timer = variable_register[instruction.x];
+                                        break;
+                                case 0x1E:
+                                        index += variable_register[instruction.x];
+                                        break;
+                                case 0x0A: {
+                                        int pressed_key = input.getPressedKey();
+                                        if(pressed_key == -1) {
+                                                pc-=2;
+                                        } else{
+                                                variable_register[instruction.x] = (uint8_t) pressed_key;
+                                        }
+                                        break;
+                                }
+                                case 0x29:
+                                        index = 0x050 + (variable_register[instruction.x] & 0x0F) * 5;
+                                        break;
+                                case 0x33:
+                                        memory[index] = variable_register[instruction.x]/100;
+                                        memory[index+1] = (variable_register[instruction.x]/10)%10;
+                                        memory[index+2] = variable_register[instruction.x]%10;
+                                        break;
+                                case 0x55:
+                                        for(int i = 0; i <= instruction.x; i++) {
+                                                memory[index + i] = variable_register[i];
+                                        }
+                                        if(!config.modern_index_incrementation) {
+                                                index += instruction.x + 1;
+                                        }
+                                        break;
+                                case 0x65:
+                                        for(int i = 0; i <= instruction.x; i++) {
+                                                variable_register[i] = memory[index + i];
+                                        }
+                                        if(!config.modern_index_incrementation) {
+                                                index += instruction.x + 1;
+                                        }
+                                        break;
+                                default:
+                                        spdlog::warn("unknown FXNN opcode: {:#06x}", instruction.full_opcode);
+                                        break;
+                        }
                         break;
                 default:
-                        //add logging of unknown instruction here
+                        spdlog::warn("unknown opcode: {:#06x}", instruction.full_opcode);
         }
         return true;
 }

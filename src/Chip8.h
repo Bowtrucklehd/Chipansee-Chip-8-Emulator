@@ -7,6 +7,13 @@
 #include <stack>
 #include <string>
 
+
+struct Chip8Config {
+        bool modern_shift; // this flag sets if the shift operation will follow the original CHIP 8 or new CHIP8 versions;
+        bool modern_b_instruction;
+        bool modern_index_incrementation;
+};
+
 struct Instruction {
         uint16_t full_opcode; // full opcode
         uint8_t code; // first nibble
@@ -20,7 +27,7 @@ struct Instruction {
 class Chip8 {
 
         public:
-                Chip8(Display& display, Input& input);
+                Chip8(Display& display, Input& input, Chip8Config& config);
                 ~Chip8();
 
                 void loadRom(const std::string& path);
@@ -35,11 +42,12 @@ class Chip8 {
 
                 Display& display;
                 Input& input;
+                Chip8Config& config;
 
                 uint8_t memory[4096];
                 uint16_t index;
                 uint16_t pc;
-                uint16_t variable_register[16];
+                uint8_t variable_register[16];
                 std::stack<uint16_t> stack;
                 uint8_t delay_timer;
                 uint8_t sound_timer;
