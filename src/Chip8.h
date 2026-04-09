@@ -14,6 +14,7 @@ struct Chip8Config {
         int cycles_per_second;
         int frames_per_second;
 
+        bool high_res_support;
         bool vf_reset_quirk;
         bool memory_quirk;
         bool display_wait_quirk;
@@ -51,6 +52,23 @@ class Chip8 {
                 uint16_t fetch();
                 Instruction decode(uint16_t opcode);
                 bool execute(Instruction instruction);
+
+                void op_0x0(const Instruction& i);
+                void op_0x1(const Instruction& i);
+                void op_0x2(const Instruction& i);
+                void op_0x3(const Instruction& i);
+                void op_0x4(const Instruction& i);
+                void op_0x5(const Instruction& i);
+                void op_0x6(const Instruction& i);
+                void op_0x7(const Instruction& i);
+                void op_0x8(const Instruction& i);
+                void op_0x9(const Instruction& i);
+                void op_0xA(const Instruction& i);
+                void op_0xB(const Instruction& i);
+                void op_0xC(const Instruction& i);
+                bool op_0xD(const Instruction& i);
+                void op_0xE(const Instruction& i);
+                void op_0xF(const Instruction& i);
 
                 Display& display;
                 Input& input;

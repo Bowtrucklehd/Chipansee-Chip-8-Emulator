@@ -10,28 +10,30 @@
 static constexpr int PIXEL_SCALE              = 10;
 static constexpr int MICROSECONDS_IN_A_SECOND = 1000000;
 
-static Chip8Config ORIGINAL   = { .display_width = 64, .display_height = 32, .cycles_per_second = 700,  .frames_per_second = 60, .vf_reset_quirk = true,  .memory_quirk = true, .display_wait_quirk = true,  .clipping_quirk = true,  .shifting_quirk = false, .jumping_quirk = false };
-static Chip8Config CHIP48     = { .display_width = 128, .display_height = 64, .cycles_per_second = 700,  .frames_per_second = 60, .vf_reset_quirk = false,  .memory_quirk = true,  .display_wait_quirk = true,  .clipping_quirk = false,  .shifting_quirk = false,  .jumping_quirk = false  };
-static Chip8Config SUPERCHIP  = { .display_width = 128, .display_height = 64, .cycles_per_second = 1000, .frames_per_second = 60, .vf_reset_quirk = false, .memory_quirk = true,  .display_wait_quirk = false, .clipping_quirk = false, .shifting_quirk = true,  .jumping_quirk = true  };
-static Chip8Config ALL_QUIRKS = { .display_width = 64, .display_height = 32, .cycles_per_second = 700,  .frames_per_second = 60, .vf_reset_quirk = true,  .memory_quirk = true,  .display_wait_quirk = true,  .clipping_quirk = true,  .shifting_quirk = true,  .jumping_quirk = true  };
-static Chip8Config NO_QUIRKS  = { .display_width = 64, .display_height = 32, .cycles_per_second = 700,  .frames_per_second = 60, .vf_reset_quirk = false, .memory_quirk = false, .display_wait_quirk = false, .clipping_quirk = false, .shifting_quirk = false, .jumping_quirk = false };
+static Chip8Config ORIGINAL   = { .display_width = 64,  .display_height = 32, .cycles_per_second = 700,  .frames_per_second = 60, .high_res_support = false, .vf_reset_quirk = true,  .memory_quirk = true,  .display_wait_quirk = true,  .clipping_quirk = true,  .shifting_quirk = false, .jumping_quirk = false };
+static Chip8Config CHIP48     = { .display_width = 128, .display_height = 64, .cycles_per_second = 700,  .frames_per_second = 60, .high_res_support = true,  .vf_reset_quirk = false, .memory_quirk = true,  .display_wait_quirk = true,  .clipping_quirk = false, .shifting_quirk = false, .jumping_quirk = false };
+static Chip8Config SUPERCHIP_LEGACY = { .display_width = 128, .display_height = 64, .cycles_per_second = 1000, .frames_per_second = 60, .high_res_support = true,  .vf_reset_quirk = false, .memory_quirk = false, .display_wait_quirk = true,  .clipping_quirk = true, .shifting_quirk = true, .jumping_quirk = true };
+static Chip8Config SUPERCHIP_MODERN = { .display_width = 128, .display_height = 64, .cycles_per_second = 1000, .frames_per_second = 60, .high_res_support = true,  .vf_reset_quirk = false, .memory_quirk = false, .display_wait_quirk = false, .clipping_quirk = true, .shifting_quirk = true, .jumping_quirk = true };
+static Chip8Config ALL_QUIRKS = { .display_width = 64,  .display_height = 32, .cycles_per_second = 700,  .frames_per_second = 60, .high_res_support = false, .vf_reset_quirk = true,  .memory_quirk = true,  .display_wait_quirk = true,  .clipping_quirk = true,  .shifting_quirk = true,  .jumping_quirk = true  };
+static Chip8Config NO_QUIRKS  = { .display_width = 64,  .display_height = 32, .cycles_per_second = 700,  .frames_per_second = 60, .high_res_support = false, .vf_reset_quirk = false, .memory_quirk = false, .display_wait_quirk = false, .clipping_quirk = false, .shifting_quirk = false, .jumping_quirk = false };
 
 int main(int argc, char* argv[]) {
     spdlog::set_pattern("[%H:%M:%S.%e] [%^%-5l%$] %v");
     spdlog::set_level(spdlog::level::debug);
 
     if (argc < 2) {
-        spdlog::error("Usage: chip8 <rom_path> [original|chip48|superchip|all_quirks|no_quirks]");
+        spdlog::error("Usage: chip8 <rom_path> [original|chip48|superchip_legacy|superchip_modern|all_quirks|no_quirks]");
         return 1;
     }
 
     Chip8Config* config = &ORIGINAL;
     if (argc >= 3) {
         std::string mode = argv[2];
-        if      (mode == "chip48")     config = &CHIP48;
-        else if (mode == "superchip")  config = &SUPERCHIP;
-        else if (mode == "all_quirks") config = &ALL_QUIRKS;
-        else if (mode == "no_quirks")  config = &NO_QUIRKS;
+        if      (mode == "chip48")           config = &CHIP48;
+        else if (mode == "superchip_legacy") config = &SUPERCHIP_LEGACY;
+        else if (mode == "superchip_modern") config = &SUPERCHIP_MODERN;
+        else if (mode == "all_quirks")       config = &ALL_QUIRKS;
+        else if (mode == "no_quirks")        config = &NO_QUIRKS;
         else if (mode != "original") {
             spdlog::warn("Unknown mode '{}', defaulting to original", mode);
         }
@@ -61,8 +63,8 @@ int main(int argc, char* argv[]) {
             }
 
             if (now - lastFrame >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / config->frames_per_second)) {
+                chip8.send_vertical_blank_interrupt();
                 if (chip8.get_draw_flag()) {
-                    chip8.send_vertical_blank_interrupt();
                     display.render();
                     chip8.set_draw_flag(false);
                 }
