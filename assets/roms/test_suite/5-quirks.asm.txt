@@ -1,0 +1,1621 @@
+Disassembly of: /Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/assets/roms/5-quirks.ch8
+ROM size: 3232 bytes
+
+Address    Bytes     Instruction
+------------------------------------------------------------
+  0x200    130C     Jump to address 0x30c
+  0x202    6000     Set V0 = 0x00
+  0x204    E0A1     Skip next instruction if key V0 is NOT pressed
+  0x206    1204     Jump to address 0x204
+  0x208    7001     Add 0x01 to V0 (no carry flag)
+  0x20a    4010     Skip next instruction if V0 != 0x10
+  0x20c    00EE     Return from subroutine
+  0x20e    1204     Jump to address 0x204
+  0x210    6500     Set V5 = 0x00
+  0x212    A222     Set index register I = 0x222
+  0x214    F155     Store V0 through V1 in memory starting at [I]
+  0x216    A282     Set index register I = 0x282
+  0x218    F155     Store V0 through V1 in memory starting at [I]
+  0x21a    1222     Jump to address 0x222
+  0x21c    4301     Skip next instruction if V3 != 0x01
+  0x21e    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x220    2202     Call subroutine at 0x202
+  0x222    0000     Unknown opcode 0x0000
+  0x224    F51E     Add V5 to index register I
+  0x226    F51E     Add V5 to index register I
+  0x228    F51E     Add V5 to index register I
+  0x22a    F51E     Add V5 to index register I
+  0x22c    F165     Read V0 through V1 from memory starting at [I]
+  0x22e    6300     Set V3 = 0x00
+  0x230    F315     Set delay timer = V3
+  0x232    F407     Set V4 = delay timer
+  0x234    3400     Skip next instruction if V4 == 0x00
+  0x236    1244     Jump to address 0x244
+  0x238    A853     Set index register I = 0x853
+  0x23a    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x23c    640A     Set V4 = 0x0a
+  0x23e    F415     Set delay timer = V4
+  0x240    6401     Set V4 = 0x01
+  0x242    8343     Set V3 = V3 XOR V4
+  0x244    640E     Set V4 = 0x0e
+  0x246    E49E     Skip next instruction if key V4 is pressed
+  0x248    1252     Jump to address 0x252
+  0x24a    4500     Skip next instruction if V5 != 0x00
+  0x24c    1252     Jump to address 0x252
+  0x24e    75FF     Add 0xff to V5 (no carry flag)
+  0x250    121C     Jump to address 0x21c
+  0x252    640F     Set V4 = 0x0f
+  0x254    E49E     Skip next instruction if key V4 is pressed
+  0x256    1260     Jump to address 0x260
+  0x258    9520     Skip next instruction if V5 != V2
+  0x25a    1260     Jump to address 0x260
+  0x25c    7501     Add 0x01 to V5 (no carry flag)
+  0x25e    121C     Jump to address 0x21c
+  0x260    8650     Set V6 = V5
+  0x262    640A     Set V4 = 0x0a
+  0x264    E4A1     Skip next instruction if key V4 is NOT pressed
+  0x266    1280     Jump to address 0x280
+  0x268    6400     Set V4 = 0x00
+  0x26a    7201     Add 0x01 to V2 (no carry flag)
+  0x26c    7401     Add 0x01 to V4 (no carry flag)
+  0x26e    E49E     Skip next instruction if key V4 is pressed
+  0x270    1278     Jump to address 0x278
+  0x272    8640     Set V6 = V4
+  0x274    76FF     Add 0xff to V6 (no carry flag)
+  0x276    1280     Jump to address 0x280
+  0x278    5420     Skip next instruction if V4 == V2
+  0x27a    126C     Jump to address 0x26c
+  0x27c    72FF     Add 0xff to V2 (no carry flag)
+  0x27e    1232     Jump to address 0x232
+  0x280    2202     Call subroutine at 0x202
+  0x282    0000     Unknown opcode 0x0000
+  0x284    F61E     Add V6 to index register I
+  0x286    F61E     Add V6 to index register I
+  0x288    F61E     Add V6 to index register I
+  0x28a    F61E     Add V6 to index register I
+  0x28c    6402     Set V4 = 0x02
+  0x28e    F41E     Add V4 to index register I
+  0x290    F165     Read V0 through V1 from memory starting at [I]
+  0x292    6410     Set V4 = 0x10
+  0x294    8041     Set V0 = V0 OR V4
+  0x296    A29A     Set index register I = 0x29a
+  0x298    F155     Store V0 through V1 in memory starting at [I]
+  0x29a    0000     Unknown opcode 0x0000
+  0x29c    FC65     Read V0 through VC from memory starting at [I]
+  0x29e    2302     Call subroutine at 0x302
+  0x2a0    4100     Skip next instruction if V1 != 0x00
+  0x2a2    00EE     Return from subroutine
+  0x2a4    8010     Set V0 = V1
+  0x2a6    2302     Call subroutine at 0x302
+  0x2a8    4200     Skip next instruction if V2 != 0x00
+  0x2aa    00EE     Return from subroutine
+  0x2ac    8020     Set V0 = V2
+  0x2ae    2302     Call subroutine at 0x302
+  0x2b0    4300     Skip next instruction if V3 != 0x00
+  0x2b2    00EE     Return from subroutine
+  0x2b4    8030     Set V0 = V3
+  0x2b6    2302     Call subroutine at 0x302
+  0x2b8    4400     Skip next instruction if V4 != 0x00
+  0x2ba    00EE     Return from subroutine
+  0x2bc    8040     Set V0 = V4
+  0x2be    2302     Call subroutine at 0x302
+  0x2c0    4500     Skip next instruction if V5 != 0x00
+  0x2c2    00EE     Return from subroutine
+  0x2c4    8050     Set V0 = V5
+  0x2c6    2302     Call subroutine at 0x302
+  0x2c8    4600     Skip next instruction if V6 != 0x00
+  0x2ca    00EE     Return from subroutine
+  0x2cc    8060     Set V0 = V6
+  0x2ce    2302     Call subroutine at 0x302
+  0x2d0    4700     Skip next instruction if V7 != 0x00
+  0x2d2    00EE     Return from subroutine
+  0x2d4    8070     Set V0 = V7
+  0x2d6    2302     Call subroutine at 0x302
+  0x2d8    4800     Skip next instruction if V8 != 0x00
+  0x2da    00EE     Return from subroutine
+  0x2dc    8080     Set V0 = V8
+  0x2de    2302     Call subroutine at 0x302
+  0x2e0    4900     Skip next instruction if V9 != 0x00
+  0x2e2    00EE     Return from subroutine
+  0x2e4    8090     Set V0 = V9
+  0x2e6    2302     Call subroutine at 0x302
+  0x2e8    4A00     Skip next instruction if VA != 0x00
+  0x2ea    00EE     Return from subroutine
+  0x2ec    80A0     Set V0 = VA
+  0x2ee    2302     Call subroutine at 0x302
+  0x2f0    4B00     Skip next instruction if VB != 0x00
+  0x2f2    00EE     Return from subroutine
+  0x2f4    80B0     Set V0 = VB
+  0x2f6    2302     Call subroutine at 0x302
+  0x2f8    4C00     Skip next instruction if VC != 0x00
+  0x2fa    00EE     Return from subroutine
+  0x2fc    80C0     Set V0 = VC
+  0x2fe    2302     Call subroutine at 0x302
+  0x300    00EE     Return from subroutine
+  0x302    A857     Set index register I = 0x857
+  0x304    F01E     Add V0 to index register I
+  0x306    DDE4     Draw 4-byte sprite from [I] at (VD, VE), VF = collision
+  0x308    7D04     Add 0x04 to VD (no carry flag)
+  0x30a    00EE     Return from subroutine
+  0x30c    00E0     Clear the screen
+  0x30e    A1FF     Set index register I = 0x1ff
+  0x310    F065     Read V0 through V0 from memory starting at [I]
+  0x312    4001     Skip next instruction if V0 != 0x01
+  0x314    1380     Jump to address 0x380
+  0x316    4002     Skip next instruction if V0 != 0x02
+  0x318    1388     Jump to address 0x388
+  0x31a    4004     Skip next instruction if V0 != 0x04
+  0x31c    1390     Jump to address 0x390
+  0x31e    4003     Skip next instruction if V0 != 0x03
+  0x320    1398     Jump to address 0x398
+  0x322    6D06     Set VD = 0x06
+  0x324    6E02     Set VE = 0x02
+  0x326    A903     Set index register I = 0x903
+  0x328    229C     Call subroutine at 0x29c
+  0x32a    6D0A     Set VD = 0x0a
+  0x32c    6E0A     Set VE = 0x0a
+  0x32e    A911     Set index register I = 0x911
+  0x330    229C     Call subroutine at 0x29c
+  0x332    6D0A     Set VD = 0x0a
+  0x334    6E0F     Set VE = 0x0f
+  0x336    A91A     Set index register I = 0x91a
+  0x338    229C     Call subroutine at 0x29c
+  0x33a    6D0A     Set VD = 0x0a
+  0x33c    6E14     Set VE = 0x14
+  0x33e    A927     Set index register I = 0x927
+  0x340    229C     Call subroutine at 0x29c
+  0x342    2370     Call subroutine at 0x370
+  0x344    60A8     Set V0 = 0xa8
+  0x346    61F7     Set V1 = 0xf7
+  0x348    6202     Set V2 = 0x02
+  0x34a    1210     Jump to address 0x210
+  0x34c    00E0     Clear the screen
+  0x34e    6D0A     Set VD = 0x0a
+  0x350    6E02     Set VE = 0x02
+  0x352    A939     Set index register I = 0x939
+  0x354    229C     Call subroutine at 0x29c
+  0x356    6D12     Set VD = 0x12
+  0x358    6E0C     Set VE = 0x0c
+  0x35a    A945     Set index register I = 0x945
+  0x35c    229C     Call subroutine at 0x29c
+  0x35e    6D12     Set VD = 0x12
+  0x360    6E11     Set VE = 0x11
+  0x362    A94E     Set index register I = 0x94e
+  0x364    229C     Call subroutine at 0x29c
+  0x366    2370     Call subroutine at 0x370
+  0x368    60A9     Set V0 = 0xa9
+  0x36a    6131     Set V1 = 0x31
+  0x36c    6201     Set V2 = 0x01
+  0x36e    1210     Jump to address 0x210
+  0x370    6A32     Set VA = 0x32
+  0x372    6B1B     Set VB = 0x1b
+  0x374    A9CB     Set index register I = 0x9cb
+  0x376    DAB4     Draw 4-byte sprite from [I] at (VA, VB), VF = collision
+  0x378    6A3A     Set VA = 0x3a
+  0x37a    A9CF     Set index register I = 0x9cf
+  0x37c    DAB4     Draw 4-byte sprite from [I] at (VA, VB), VF = collision
+  0x37e    00EE     Return from subroutine
+  0x380    A842     Set index register I = 0x842
+  0x382    6001     Set V0 = 0x01
+  0x384    F055     Store V0 through V0 in memory starting at [I]
+  0x386    139E     Jump to address 0x39e
+  0x388    A842     Set index register I = 0x842
+  0x38a    6002     Set V0 = 0x02
+  0x38c    F055     Store V0 through V0 in memory starting at [I]
+  0x38e    139E     Jump to address 0x39e
+  0x390    A842     Set index register I = 0x842
+  0x392    6004     Set V0 = 0x04
+  0x394    F055     Store V0 through V0 in memory starting at [I]
+  0x396    139E     Jump to address 0x39e
+  0x398    A842     Set index register I = 0x842
+  0x39a    6003     Set V0 = 0x03
+  0x39c    F055     Store V0 through V0 in memory starting at [I]
+  0x39e    2202     Call subroutine at 0x202
+  0x3a0    00E0     Clear the screen
+  0x3a2    A842     Set index register I = 0x842
+  0x3a4    F065     Read V0 through V0 from memory starting at [I]
+  0x3a6    3001     Skip next instruction if V0 == 0x01
+  0x3a8    13C8     Jump to address 0x3c8
+  0x3aa    276C     Call subroutine at 0x76c
+  0x3ac    6001     Set V0 = 0x01
+  0x3ae    3300     Skip next instruction if V3 == 0x00
+  0x3b0    6000     Set V0 = 0x00
+  0x3b2    6F06     Set VF = 0x06
+  0x3b4    8F25     Set VF = VF - V2, VF = 1 if no borrow
+  0x3b6    4F00     Skip next instruction if VF != 0x00
+  0x3b8    6000     Set V0 = 0x00
+  0x3ba    6F06     Set VF = 0x06
+  0x3bc    8F27     Set VF = V2 - VF, VF = 1 if no borrow
+  0x3be    4F00     Skip next instruction if VF != 0x00
+  0x3c0    6006     Set V0 = 0x06
+  0x3c2    A843     Set index register I = 0x843
+  0x3c4    F055     Store V0 through V0 in memory starting at [I]
+  0x3c6    142E     Jump to address 0x42e
+  0x3c8    279A     Call subroutine at 0x79a
+  0x3ca    6001     Set V0 = 0x01
+  0x3cc    3300     Skip next instruction if V3 == 0x00
+  0x3ce    6000     Set V0 = 0x00
+  0x3d0    6F03     Set VF = 0x03
+  0x3d2    8F25     Set VF = VF - V2, VF = 1 if no borrow
+  0x3d4    4F00     Skip next instruction if VF != 0x00
+  0x3d6    6000     Set V0 = 0x00
+  0x3d8    6F03     Set VF = 0x03
+  0x3da    8F27     Set VF = V2 - VF, VF = 1 if no borrow
+  0x3dc    4F00     Skip next instruction if VF != 0x00
+  0x3de    6006     Set V0 = 0x06
+  0x3e0    A843     Set index register I = 0x843
+  0x3e2    F055     Store V0 through V0 in memory starting at [I]
+  0x3e4    00FF     Switch to high-resolution mode (128x64)
+  0x3e6    00E0     Clear the screen
+  0x3e8    27E6     Call subroutine at 0x7e6
+  0x3ea    6101     Set V1 = 0x01
+  0x3ec    3300     Skip next instruction if V3 == 0x00
+  0x3ee    6100     Set V1 = 0x00
+  0x3f0    6F03     Set VF = 0x03
+  0x3f2    8F25     Set VF = VF - V2, VF = 1 if no borrow
+  0x3f4    4F00     Skip next instruction if VF != 0x00
+  0x3f6    6100     Set V1 = 0x00
+  0x3f8    6F03     Set VF = 0x03
+  0x3fa    8F27     Set VF = V2 - VF, VF = 1 if no borrow
+  0x3fc    4F00     Skip next instruction if VF != 0x00
+  0x3fe    6106     Set V1 = 0x06
+  0x400    A843     Set index register I = 0x843
+  0x402    F065     Read V0 through V0 from memory starting at [I]
+  0x404    4006     Skip next instruction if V0 != 0x06
+  0x406    1428     Jump to address 0x428
+  0x408    3106     Skip next instruction if V1 == 0x06
+  0x40a    1410     Jump to address 0x410
+  0x40c    6006     Set V0 = 0x06
+  0x40e    1428     Jump to address 0x428
+  0x410    3000     Skip next instruction if V0 == 0x00
+  0x412    141C     Jump to address 0x41c
+  0x414    4100     Skip next instruction if V1 != 0x00
+  0x416    6003     Set V0 = 0x03
+  0x418    4101     Skip next instruction if V1 != 0x01
+  0x41a    6005     Set V0 = 0x05
+  0x41c    3001     Skip next instruction if V0 == 0x01
+  0x41e    1428     Jump to address 0x428
+  0x420    4100     Skip next instruction if V1 != 0x00
+  0x422    6004     Set V0 = 0x04
+  0x424    4101     Skip next instruction if V1 != 0x01
+  0x426    6002     Set V0 = 0x02
+  0x428    A843     Set index register I = 0x843
+  0x42a    F055     Store V0 through V0 in memory starting at [I]
+  0x42c    00FE     Switch to low-resolution mode (64x32)
+  0x42e    00E0     Clear the screen
+  0x430    A9BA     Set index register I = 0x9ba
+  0x432    601C     Set V0 = 0x1c
+  0x434    611D     Set V1 = 0x1d
+  0x436    D016     Draw 6-byte sprite from [I] at (V0, V1), VF = collision
+  0x438    6016     Set V0 = 0x16
+  0x43a    6102     Set V1 = 0x02
+  0x43c    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x43e    85F0     Set V5 = VF
+  0x440    6022     Set V0 = 0x22
+  0x442    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x444    86F0     Set V6 = VF
+  0x446    00E0     Clear the screen
+  0x448    A9BA     Set index register I = 0x9ba
+  0x44a    603D     Set V0 = 0x3d
+  0x44c    6105     Set V1 = 0x05
+  0x44e    D016     Draw 6-byte sprite from [I] at (V0, V1), VF = collision
+  0x450    6003     Set V0 = 0x03
+  0x452    6104     Set V1 = 0x04
+  0x454    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x456    87F0     Set V7 = VF
+  0x458    610A     Set V1 = 0x0a
+  0x45a    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x45c    88F0     Set V8 = VF
+  0x45e    00E0     Clear the screen
+  0x460    606E     Set V0 = 0x6e
+  0x462    6132     Set V1 = 0x32
+  0x464    D016     Draw 6-byte sprite from [I] at (V0, V1), VF = collision
+  0x466    6028     Set V0 = 0x28
+  0x468    6111     Set V1 = 0x11
+  0x46a    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x46c    89F0     Set V9 = VF
+  0x46e    6034     Set V0 = 0x34
+  0x470    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x472    89F4     Set V9 = V9 + VF, VF = carry
+  0x474    6117     Set V1 = 0x17
+  0x476    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x478    89F4     Set V9 = V9 + VF, VF = carry
+  0x47a    6028     Set V0 = 0x28
+  0x47c    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x47e    89F4     Set V9 = V9 + VF, VF = carry
+  0x480    6000     Set V0 = 0x00
+  0x482    4500     Skip next instruction if V5 != 0x00
+  0x484    6001     Set V0 = 0x01
+  0x486    5560     Skip next instruction if V5 == V6
+  0x488    6006     Set V0 = 0x06
+  0x48a    5570     Skip next instruction if V5 == V7
+  0x48c    6006     Set V0 = 0x06
+  0x48e    5580     Skip next instruction if V5 == V8
+  0x490    6006     Set V0 = 0x06
+  0x492    3904     Skip next instruction if V9 == 0x04
+  0x494    6007     Set V0 = 0x07
+  0x496    A844     Set index register I = 0x844
+  0x498    F055     Store V0 through V0 in memory starting at [I]
+  0x49a    A842     Set index register I = 0x842
+  0x49c    F065     Read V0 through V0 from memory starting at [I]
+  0x49e    4001     Skip next instruction if V0 != 0x01
+  0x4a0    1556     Jump to address 0x556
+  0x4a2    00FF     Switch to high-resolution mode (128x64)
+  0x4a4    00E0     Clear the screen
+  0x4a6    A9BA     Set index register I = 0x9ba
+  0x4a8    603C     Set V0 = 0x3c
+  0x4aa    613D     Set V1 = 0x3d
+  0x4ac    D016     Draw 6-byte sprite from [I] at (V0, V1), VF = collision
+  0x4ae    6036     Set V0 = 0x36
+  0x4b0    6102     Set V1 = 0x02
+  0x4b2    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x4b4    85F0     Set V5 = VF
+  0x4b6    6042     Set V0 = 0x42
+  0x4b8    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x4ba    86F0     Set V6 = VF
+  0x4bc    00E0     Clear the screen
+  0x4be    A9BA     Set index register I = 0x9ba
+  0x4c0    607D     Set V0 = 0x7d
+  0x4c2    6105     Set V1 = 0x05
+  0x4c4    D016     Draw 6-byte sprite from [I] at (V0, V1), VF = collision
+  0x4c6    6003     Set V0 = 0x03
+  0x4c8    6104     Set V1 = 0x04
+  0x4ca    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x4cc    87F0     Set V7 = VF
+  0x4ce    610A     Set V1 = 0x0a
+  0x4d0    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x4d2    88F0     Set V8 = VF
+  0x4d4    00E0     Clear the screen
+  0x4d6    60AE     Set V0 = 0xae
+  0x4d8    6152     Set V1 = 0x52
+  0x4da    D016     Draw 6-byte sprite from [I] at (V0, V1), VF = collision
+  0x4dc    6028     Set V0 = 0x28
+  0x4de    6111     Set V1 = 0x11
+  0x4e0    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x4e2    89F0     Set V9 = VF
+  0x4e4    6034     Set V0 = 0x34
+  0x4e6    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x4e8    89F4     Set V9 = V9 + VF, VF = carry
+  0x4ea    6117     Set V1 = 0x17
+  0x4ec    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x4ee    89F4     Set V9 = V9 + VF, VF = carry
+  0x4f0    6028     Set V0 = 0x28
+  0x4f2    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x4f4    89F4     Set V9 = V9 + VF, VF = carry
+  0x4f6    6100     Set V1 = 0x00
+  0x4f8    4500     Skip next instruction if V5 != 0x00
+  0x4fa    6101     Set V1 = 0x01
+  0x4fc    5560     Skip next instruction if V5 == V6
+  0x4fe    6106     Set V1 = 0x06
+  0x500    5570     Skip next instruction if V5 == V7
+  0x502    6106     Set V1 = 0x06
+  0x504    5580     Skip next instruction if V5 == V8
+  0x506    6106     Set V1 = 0x06
+  0x508    3904     Skip next instruction if V9 == 0x04
+  0x50a    6107     Set V1 = 0x07
+  0x50c    A844     Set index register I = 0x844
+  0x50e    F065     Read V0 through V0 from memory starting at [I]
+  0x510    3006     Skip next instruction if V0 == 0x06
+  0x512    151C     Jump to address 0x51c
+  0x514    4106     Skip next instruction if V1 != 0x06
+  0x516    1550     Jump to address 0x550
+  0x518    6008     Set V0 = 0x08
+  0x51a    1550     Jump to address 0x550
+  0x51c    3007     Skip next instruction if V0 == 0x07
+  0x51e    1528     Jump to address 0x528
+  0x520    4107     Skip next instruction if V1 != 0x07
+  0x522    1550     Jump to address 0x550
+  0x524    6008     Set V0 = 0x08
+  0x526    1550     Jump to address 0x550
+  0x528    3106     Skip next instruction if V1 == 0x06
+  0x52a    1530     Jump to address 0x530
+  0x52c    6008     Set V0 = 0x08
+  0x52e    1550     Jump to address 0x550
+  0x530    3107     Skip next instruction if V1 == 0x07
+  0x532    1538     Jump to address 0x538
+  0x534    6008     Set V0 = 0x08
+  0x536    1550     Jump to address 0x550
+  0x538    3001     Skip next instruction if V0 == 0x01
+  0x53a    1544     Jump to address 0x544
+  0x53c    4101     Skip next instruction if V1 != 0x01
+  0x53e    6002     Set V0 = 0x02
+  0x540    4100     Skip next instruction if V1 != 0x00
+  0x542    6004     Set V0 = 0x04
+  0x544    3000     Skip next instruction if V0 == 0x00
+  0x546    1550     Jump to address 0x550
+  0x548    4101     Skip next instruction if V1 != 0x01
+  0x54a    6005     Set V0 = 0x05
+  0x54c    4100     Skip next instruction if V1 != 0x00
+  0x54e    6003     Set V0 = 0x03
+  0x550    A844     Set index register I = 0x844
+  0x552    F055     Store V0 through V0 in memory starting at [I]
+  0x554    00FE     Switch to low-resolution mode (64x32)
+  0x556    00E0     Clear the screen
+  0x558    6D01     Set VD = 0x01
+  0x55a    6E01     Set VE = 0x01
+  0x55c    A957     Set index register I = 0x957
+  0x55e    229C     Call subroutine at 0x29c
+  0x560    6500     Set V5 = 0x00
+  0x562    6F0F     Set VF = 0x0f
+  0x564    8002     Set V0 = V0 AND V0
+  0x566    4F00     Skip next instruction if VF != 0x00
+  0x568    6501     Set V5 = 0x01
+  0x56a    6600     Set V6 = 0x00
+  0x56c    6F0F     Set VF = 0x0f
+  0x56e    8001     Set V0 = V0 OR V0
+  0x570    4F00     Skip next instruction if VF != 0x00
+  0x572    6601     Set V6 = 0x01
+  0x574    6700     Set V7 = 0x00
+  0x576    6F0F     Set VF = 0x0f
+  0x578    8003     Set V0 = V0 XOR V0
+  0x57a    4F00     Skip next instruction if VF != 0x00
+  0x57c    6701     Set V7 = 0x01
+  0x57e    A842     Set index register I = 0x842
+  0x580    F065     Read V0 through V0 from memory starting at [I]
+  0x582    A858     Set index register I = 0x858
+  0x584    3001     Skip next instruction if V0 == 0x01
+  0x586    158E     Jump to address 0x58e
+  0x588    4501     Skip next instruction if V5 != 0x01
+  0x58a    A855     Set index register I = 0x855
+  0x58c    1592     Jump to address 0x592
+  0x58e    4500     Skip next instruction if V5 != 0x00
+  0x590    A855     Set index register I = 0x855
+  0x592    6A3B     Set VA = 0x3b
+  0x594    6B02     Set VB = 0x02
+  0x596    DAB3     Draw 3-byte sprite from [I] at (VA, VB), VF = collision
+  0x598    A98E     Set index register I = 0x98e
+  0x59a    4501     Skip next instruction if V5 != 0x01
+  0x59c    A98B     Set index register I = 0x98b
+  0x59e    5560     Skip next instruction if V5 == V6
+  0x5a0    A9AB     Set index register I = 0x9ab
+  0x5a2    5570     Skip next instruction if V5 == V7
+  0x5a4    A9B0     Set index register I = 0x9b0
+  0x5a6    6D2A     Set VD = 0x2a
+  0x5a8    6E01     Set VE = 0x01
+  0x5aa    229C     Call subroutine at 0x29c
+  0x5ac    6D01     Set VD = 0x01
+  0x5ae    6E06     Set VE = 0x06
+  0x5b0    A960     Set index register I = 0x960
+  0x5b2    229C     Call subroutine at 0x29c
+  0x5b4    6001     Set V0 = 0x01
+  0x5b6    6102     Set V1 = 0x02
+  0x5b8    6203     Set V2 = 0x03
+  0x5ba    6304     Set V3 = 0x04
+  0x5bc    6405     Set V4 = 0x05
+  0x5be    A845     Set index register I = 0x845
+  0x5c0    F455     Store V0 through V4 in memory starting at [I]
+  0x5c2    600B     Set V0 = 0x0b
+  0x5c4    610C     Set V1 = 0x0c
+  0x5c6    620D     Set V2 = 0x0d
+  0x5c8    A845     Set index register I = 0x845
+  0x5ca    F255     Store V0 through V2 in memory starting at [I]
+  0x5cc    F065     Read V0 through V0 from memory starting at [I]
+  0x5ce    8500     Set V5 = V0
+  0x5d0    F065     Read V0 through V0 from memory starting at [I]
+  0x5d2    8600     Set V6 = V0
+  0x5d4    A842     Set index register I = 0x842
+  0x5d6    F065     Read V0 through V0 from memory starting at [I]
+  0x5d8    A858     Set index register I = 0x858
+  0x5da    6100     Set V1 = 0x00
+  0x5dc    4001     Skip next instruction if V0 != 0x01
+  0x5de    15EC     Jump to address 0x5ec
+  0x5e0    4002     Skip next instruction if V0 != 0x02
+  0x5e2    15FC     Jump to address 0x5fc
+  0x5e4    4004     Skip next instruction if V0 != 0x04
+  0x5e6    15FC     Jump to address 0x5fc
+  0x5e8    4003     Skip next instruction if V0 != 0x03
+  0x5ea    15EC     Jump to address 0x5ec
+  0x5ec    3504     Skip next instruction if V5 == 0x04
+  0x5ee    15FA     Jump to address 0x5fa
+  0x5f0    3605     Skip next instruction if V6 == 0x05
+  0x5f2    15F8     Jump to address 0x5f8
+  0x5f4    A855     Set index register I = 0x855
+  0x5f6    15FA     Jump to address 0x5fa
+  0x5f8    6101     Set V1 = 0x01
+  0x5fa    160A     Jump to address 0x60a
+  0x5fc    350B     Skip next instruction if V5 == 0x0b
+  0x5fe    160A     Jump to address 0x60a
+  0x600    360B     Skip next instruction if V6 == 0x0b
+  0x602    1608     Jump to address 0x608
+  0x604    A855     Set index register I = 0x855
+  0x606    160A     Jump to address 0x60a
+  0x608    6101     Set V1 = 0x01
+  0x60a    6A3B     Set VA = 0x3b
+  0x60c    6B07     Set VB = 0x07
+  0x60e    DAB3     Draw 3-byte sprite from [I] at (VA, VB), VF = collision
+  0x610    A98B     Set index register I = 0x98b
+  0x612    450B     Skip next instruction if V5 != 0x0b
+  0x614    A98E     Set index register I = 0x98e
+  0x616    4101     Skip next instruction if V1 != 0x01
+  0x618    A9AB     Set index register I = 0x9ab
+  0x61a    6D2A     Set VD = 0x2a
+  0x61c    6E06     Set VE = 0x06
+  0x61e    229C     Call subroutine at 0x29c
+  0x620    6D01     Set VD = 0x01
+  0x622    6E0B     Set VE = 0x0b
+  0x624    A967     Set index register I = 0x967
+  0x626    229C     Call subroutine at 0x29c
+  0x628    A842     Set index register I = 0x842
+  0x62a    F165     Read V0 through V1 from memory starting at [I]
+  0x62c    A858     Set index register I = 0x858
+  0x62e    3001     Skip next instruction if V0 == 0x01
+  0x630    1636     Jump to address 0x636
+  0x632    4101     Skip next instruction if V1 != 0x01
+  0x634    A855     Set index register I = 0x855
+  0x636    3002     Skip next instruction if V0 == 0x02
+  0x638    163E     Jump to address 0x63e
+  0x63a    4103     Skip next instruction if V1 != 0x03
+  0x63c    A855     Set index register I = 0x855
+  0x63e    3004     Skip next instruction if V0 == 0x04
+  0x640    1646     Jump to address 0x646
+  0x642    4104     Skip next instruction if V1 != 0x04
+  0x644    A855     Set index register I = 0x855
+  0x646    3003     Skip next instruction if V0 == 0x03
+  0x648    164E     Jump to address 0x64e
+  0x64a    4103     Skip next instruction if V1 != 0x03
+  0x64c    A855     Set index register I = 0x855
+  0x64e    6A3B     Set VA = 0x3b
+  0x650    6B0C     Set VB = 0x0c
+  0x652    DAB3     Draw 3-byte sprite from [I] at (VA, VB), VF = collision
+  0x654    A98E     Set index register I = 0x98e
+  0x656    4101     Skip next instruction if V1 != 0x01
+  0x658    A98B     Set index register I = 0x98b
+  0x65a    4106     Skip next instruction if V1 != 0x06
+  0x65c    A992     Set index register I = 0x992
+  0x65e    4104     Skip next instruction if V1 != 0x04
+  0x660    A997     Set index register I = 0x997
+  0x662    4105     Skip next instruction if V1 != 0x05
+  0x664    A99C     Set index register I = 0x99c
+  0x666    4102     Skip next instruction if V1 != 0x02
+  0x668    A9A1     Set index register I = 0x9a1
+  0x66a    4103     Skip next instruction if V1 != 0x03
+  0x66c    A9A6     Set index register I = 0x9a6
+  0x66e    6D2A     Set VD = 0x2a
+  0x670    6E0B     Set VE = 0x0b
+  0x672    229C     Call subroutine at 0x29c
+  0x674    6D01     Set VD = 0x01
+  0x676    6E10     Set VE = 0x10
+  0x678    A971     Set index register I = 0x971
+  0x67a    229C     Call subroutine at 0x29c
+  0x67c    A842     Set index register I = 0x842
+  0x67e    F265     Read V0 through V2 from memory starting at [I]
+  0x680    A858     Set index register I = 0x858
+  0x682    3001     Skip next instruction if V0 == 0x01
+  0x684    168A     Jump to address 0x68a
+  0x686    4201     Skip next instruction if V2 != 0x01
+  0x688    A855     Set index register I = 0x855
+  0x68a    3002     Skip next instruction if V0 == 0x02
+  0x68c    1692     Jump to address 0x692
+  0x68e    4202     Skip next instruction if V2 != 0x02
+  0x690    A855     Set index register I = 0x855
+  0x692    3004     Skip next instruction if V0 == 0x04
+  0x694    169A     Jump to address 0x69a
+  0x696    4202     Skip next instruction if V2 != 0x02
+  0x698    A855     Set index register I = 0x855
+  0x69a    3003     Skip next instruction if V0 == 0x03
+  0x69c    16A2     Jump to address 0x6a2
+  0x69e    4203     Skip next instruction if V2 != 0x03
+  0x6a0    A855     Set index register I = 0x855
+  0x6a2    6A3B     Set VA = 0x3b
+  0x6a4    6B11     Set VB = 0x11
+  0x6a6    DAB3     Draw 3-byte sprite from [I] at (VA, VB), VF = collision
+  0x6a8    A98E     Set index register I = 0x98e
+  0x6aa    4201     Skip next instruction if V2 != 0x01
+  0x6ac    A98B     Set index register I = 0x98b
+  0x6ae    4204     Skip next instruction if V2 != 0x04
+  0x6b0    A997     Set index register I = 0x997
+  0x6b2    4205     Skip next instruction if V2 != 0x05
+  0x6b4    A99C     Set index register I = 0x99c
+  0x6b6    4202     Skip next instruction if V2 != 0x02
+  0x6b8    A9A1     Set index register I = 0x9a1
+  0x6ba    4203     Skip next instruction if V2 != 0x03
+  0x6bc    A9A6     Set index register I = 0x9a6
+  0x6be    4206     Skip next instruction if V2 != 0x06
+  0x6c0    A9AB     Set index register I = 0x9ab
+  0x6c2    4207     Skip next instruction if V2 != 0x07
+  0x6c4    A9B0     Set index register I = 0x9b0
+  0x6c6    4208     Skip next instruction if V2 != 0x08
+  0x6c8    A9B5     Set index register I = 0x9b5
+  0x6ca    6D2A     Set VD = 0x2a
+  0x6cc    6E10     Set VE = 0x10
+  0x6ce    229C     Call subroutine at 0x29c
+  0x6d0    6D01     Set VD = 0x01
+  0x6d2    6E15     Set VE = 0x15
+  0x6d4    A97A     Set index register I = 0x97a
+  0x6d6    229C     Call subroutine at 0x29c
+  0x6d8    6500     Set V5 = 0x00
+  0x6da    6608     Set V6 = 0x08
+  0x6dc    6700     Set V7 = 0x00
+  0x6de    6820     Set V8 = 0x20
+  0x6e0    856E     Shift V5 left by 1, VF = shifted-out bit
+  0x6e2    8786     Shift V7 right by 1, VF = shifted-out bit
+  0x6e4    A842     Set index register I = 0x842
+  0x6e6    F065     Read V0 through V0 from memory starting at [I]
+  0x6e8    A858     Set index register I = 0x858
+  0x6ea    3001     Skip next instruction if V0 == 0x01
+  0x6ec    16F2     Jump to address 0x6f2
+  0x6ee    3500     Skip next instruction if V5 == 0x00
+  0x6f0    A855     Set index register I = 0x855
+  0x6f2    3002     Skip next instruction if V0 == 0x02
+  0x6f4    16FA     Jump to address 0x6fa
+  0x6f6    4500     Skip next instruction if V5 != 0x00
+  0x6f8    A855     Set index register I = 0x855
+  0x6fa    3004     Skip next instruction if V0 == 0x04
+  0x6fc    1702     Jump to address 0x702
+  0x6fe    4500     Skip next instruction if V5 != 0x00
+  0x700    A855     Set index register I = 0x855
+  0x702    3003     Skip next instruction if V0 == 0x03
+  0x704    170A     Jump to address 0x70a
+  0x706    3500     Skip next instruction if V5 == 0x00
+  0x708    A855     Set index register I = 0x855
+  0x70a    6A3B     Set VA = 0x3b
+  0x70c    6B16     Set VB = 0x16
+  0x70e    DAB3     Draw 3-byte sprite from [I] at (VA, VB), VF = collision
+  0x710    A98E     Set index register I = 0x98e
+  0x712    4500     Skip next instruction if V5 != 0x00
+  0x714    A98B     Set index register I = 0x98b
+  0x716    5570     Skip next instruction if V5 == V7
+  0x718    A9AB     Set index register I = 0x9ab
+  0x71a    6D2A     Set VD = 0x2a
+  0x71c    6E15     Set VE = 0x15
+  0x71e    229C     Call subroutine at 0x29c
+  0x720    6D01     Set VD = 0x01
+  0x722    6E1A     Set VE = 0x1a
+  0x724    A983     Set index register I = 0x983
+  0x726    229C     Call subroutine at 0x29c
+  0x728    6098     Set V0 = 0x98
+  0x72a    6E9C     Set VE = 0x9c
+  0x72c    BE00     Jump to address 0xe00 + V0
+  0x72e    A842     Set index register I = 0x842
+  0x730    F065     Read V0 through V0 from memory starting at [I]
+  0x732    A858     Set index register I = 0x858
+  0x734    3001     Skip next instruction if V0 == 0x01
+  0x736    173C     Jump to address 0x73c
+  0x738    4500     Skip next instruction if V5 != 0x00
+  0x73a    A855     Set index register I = 0x855
+  0x73c    3002     Skip next instruction if V0 == 0x02
+  0x73e    1744     Jump to address 0x744
+  0x740    3500     Skip next instruction if V5 == 0x00
+  0x742    A855     Set index register I = 0x855
+  0x744    3004     Skip next instruction if V0 == 0x04
+  0x746    174C     Jump to address 0x74c
+  0x748    3500     Skip next instruction if V5 == 0x00
+  0x74a    A855     Set index register I = 0x855
+  0x74c    3003     Skip next instruction if V0 == 0x03
+  0x74e    1754     Jump to address 0x754
+  0x750    4500     Skip next instruction if V5 != 0x00
+  0x752    A855     Set index register I = 0x855
+  0x754    6A3B     Set VA = 0x3b
+  0x756    6B1B     Set VB = 0x1b
+  0x758    DAB3     Draw 3-byte sprite from [I] at (VA, VB), VF = collision
+  0x75a    A98E     Set index register I = 0x98e
+  0x75c    4501     Skip next instruction if V5 != 0x01
+  0x75e    A98B     Set index register I = 0x98b
+  0x760    6D2A     Set VD = 0x2a
+  0x762    6E1A     Set VE = 0x1a
+  0x764    229C     Call subroutine at 0x29c
+  0x766    F00A     Wait for any key press, store key in V0 (blocking)
+  0x768    2202     Call subroutine at 0x202
+  0x76a    130C     Jump to address 0x30c
+  0x76c    27CA     Call subroutine at 0x7ca
+  0x76e    A9C0     Set index register I = 0x9c0
+  0x770    F665     Read V0 through V6 from memory starting at [I]
+  0x772    A9C7     Set index register I = 0x9c7
+  0x774    F515     Set delay timer = V5
+  0x776    651E     Set V5 = 0x1e
+  0x778    D011     Draw 1-byte sprite from [I] at (V0, V1), VF = collision
+  0x77a    3F00     Skip next instruction if VF == 0x00
+  0x77c    1788     Jump to address 0x788
+  0x77e    6036     Set V0 = 0x36
+  0x780    F607     Set V6 = delay timer
+  0x782    8666     Shift V6 right by 1, VF = shifted-out bit
+  0x784    8666     Shift V6 right by 1, VF = shifted-out bit
+  0x786    8065     Set V0 = V0 - V6, VF = 1 if no borrow
+  0x788    75FF     Add 0xff to V5 (no carry flag)
+  0x78a    3500     Skip next instruction if V5 == 0x00
+  0x78c    1778     Jump to address 0x778
+  0x78e    8244     Set V2 = V2 + V4, VF = carry
+  0x790    83F4     Set V3 = V3 + VF, VF = carry
+  0x792    FE07     Set VE = delay timer
+  0x794    3E00     Skip next instruction if VE == 0x00
+  0x796    1776     Jump to address 0x776
+  0x798    00EE     Return from subroutine
+  0x79a    27CA     Call subroutine at 0x7ca
+  0x79c    A9C0     Set index register I = 0x9c0
+  0x79e    F665     Read V0 through V6 from memory starting at [I]
+  0x7a0    8556     Shift V5 right by 1, VF = shifted-out bit
+  0x7a2    A9C7     Set index register I = 0x9c7
+  0x7a4    F515     Set delay timer = V5
+  0x7a6    651E     Set V5 = 0x1e
+  0x7a8    D011     Draw 1-byte sprite from [I] at (V0, V1), VF = collision
+  0x7aa    3F00     Skip next instruction if VF == 0x00
+  0x7ac    17B8     Jump to address 0x7b8
+  0x7ae    6020     Set V0 = 0x20
+  0x7b0    F607     Set V6 = delay timer
+  0x7b2    8666     Shift V6 right by 1, VF = shifted-out bit
+  0x7b4    8666     Shift V6 right by 1, VF = shifted-out bit
+  0x7b6    8065     Set V0 = V0 - V6, VF = 1 if no borrow
+  0x7b8    75FF     Add 0xff to V5 (no carry flag)
+  0x7ba    3500     Skip next instruction if V5 == 0x00
+  0x7bc    17A8     Jump to address 0x7a8
+  0x7be    8244     Set V2 = V2 + V4, VF = carry
+  0x7c0    83F4     Set V3 = V3 + VF, VF = carry
+  0x7c2    FE07     Set VE = delay timer
+  0x7c4    3E00     Skip next instruction if VE == 0x00
+  0x7c6    17A6     Jump to address 0x7a6
+  0x7c8    00EE     Return from subroutine
+  0x7ca    6008     Set V0 = 0x08
+  0x7cc    6100     Set V1 = 0x00
+  0x7ce    620F     Set V2 = 0x0f
+  0x7d0    A9D3     Set index register I = 0x9d3
+  0x7d2    D01F     Draw 15-byte sprite from [I] at (V0, V1), VF = collision
+  0x7d4    F21E     Add V2 to index register I
+  0x7d6    7008     Add 0x08 to V0 (no carry flag)
+  0x7d8    3038     Skip next instruction if V0 == 0x38
+  0x7da    17E0     Jump to address 0x7e0
+  0x7dc    6008     Set V0 = 0x08
+  0x7de    710F     Add 0x0f to V1 (no carry flag)
+  0x7e0    311E     Skip next instruction if V1 == 0x1e
+  0x7e2    17D2     Jump to address 0x7d2
+  0x7e4    00EE     Return from subroutine
+  0x7e6    6010     Set V0 = 0x10
+  0x7e8    6100     Set V1 = 0x00
+  0x7ea    6220     Set V2 = 0x20
+  0x7ec    AA87     Set index register I = 0xa87
+  0x7ee    D010     Draw 16x16 sprite (SUPER-CHIP) from [I] at (V0, V1), VF = collision
+  0x7f0    F21E     Add V2 to index register I
+  0x7f2    7010     Add 0x10 to V0 (no carry flag)
+  0x7f4    3070     Skip next instruction if V0 == 0x70
+  0x7f6    17FC     Jump to address 0x7fc
+  0x7f8    6010     Set V0 = 0x10
+  0x7fa    7110     Add 0x10 to V1 (no carry flag)
+  0x7fc    3140     Skip next instruction if V1 == 0x40
+  0x7fe    17EE     Jump to address 0x7ee
+  0x800    A9C0     Set index register I = 0x9c0
+  0x802    F665     Read V0 through V6 from memory starting at [I]
+  0x804    8004     Set V0 = V0 + V0, VF = carry
+  0x806    8114     Set V1 = V1 + V1, VF = carry
+  0x808    8556     Shift V5 right by 1, VF = shifted-out bit
+  0x80a    A9C9     Set index register I = 0x9c9
+  0x80c    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x80e    7008     Add 0x08 to V0 (no carry flag)
+  0x810    303C     Skip next instruction if V0 == 0x3c
+  0x812    180C     Jump to address 0x80c
+  0x814    A9C7     Set index register I = 0x9c7
+  0x816    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x818    7001     Add 0x01 to V0 (no carry flag)
+  0x81a    3040     Skip next instruction if V0 == 0x40
+  0x81c    1816     Jump to address 0x816
+  0x81e    F515     Set delay timer = V5
+  0x820    650F     Set V5 = 0x0f
+  0x822    D012     Draw 2-byte sprite from [I] at (V0, V1), VF = collision
+  0x824    3F00     Skip next instruction if VF == 0x00
+  0x826    1830     Jump to address 0x830
+  0x828    606C     Set V0 = 0x6c
+  0x82a    F607     Set V6 = delay timer
+  0x82c    8666     Shift V6 right by 1, VF = shifted-out bit
+  0x82e    8065     Set V0 = V0 - V6, VF = 1 if no borrow
+  0x830    75FF     Add 0xff to V5 (no carry flag)
+  0x832    3500     Skip next instruction if V5 == 0x00
+  0x834    1822     Jump to address 0x822
+  0x836    8244     Set V2 = V2 + V4, VF = carry
+  0x838    83F4     Set V3 = V3 + VF, VF = carry
+  0x83a    FE07     Set VE = delay timer
+  0x83c    3E00     Skip next instruction if VE == 0x00
+  0x83e    1820     Jump to address 0x820
+  0x840    00EE     Return from subroutine
+  0x842    0000     Unknown opcode 0x0000
+  0x844    0000     Unknown opcode 0x0000
+  0x846    0000     Unknown opcode 0x0000
+  0x848    0000     Unknown opcode 0x0000
+  0x84a    0000     Unknown opcode 0x0000
+  0x84c    0000     Unknown opcode 0x0000
+  0x84e    0000     Unknown opcode 0x0000
+  0x850    0000     Unknown opcode 0x0000
+  0x852    00C0     Scroll screen down by 0 pixels
+  0x854    C0A0     Set V0 = random byte AND 0xa0
+  0x856    C080     Set V0 = random byte AND 0x80
+  0x858    A040     Set index register I = 0x040
+  0x85a    A0E0     Set index register I = 0x0e0
+  0x85c    A0A0     Set index register I = 0x0a0
+  0x85e    E0C0     Unknown opcode 0xe0c0
+  0x860    4040     Skip next instruction if V0 != 0x40
+  0x862    E0E0     Unknown opcode 0xe0e0
+  0x864    20C0     Call subroutine at 0x0c0
+  0x866    E0E0     Unknown opcode 0xe0e0
+  0x868    6020     Set V0 = 0x20
+  0x86a    E0A0     Unknown opcode 0xe0a0
+  0x86c    E020     Unknown opcode 0xe020
+  0x86e    20E0     Call subroutine at 0x0e0
+  0x870    C020     Set V0 = random byte AND 0x20
+  0x872    C0E0     Set V0 = random byte AND 0xe0
+  0x874    80E0     Set V0 = VE
+  0x876    E0E0     Unknown opcode 0xe0e0
+  0x878    2020     Call subroutine at 0x020
+  0x87a    20E0     Call subroutine at 0x0e0
+  0x87c    E0A0     Unknown opcode 0xe0a0
+  0x87e    E0E0     Unknown opcode 0xe0e0
+  0x880    E020     Unknown opcode 0xe020
+  0x882    E040     Unknown opcode 0xe040
+  0x884    A0E0     Set index register I = 0x0e0
+  0x886    A0C0     Set index register I = 0x0c0
+  0x888    E0A0     Unknown opcode 0xe0a0
+  0x88a    E0E0     Unknown opcode 0xe0e0
+  0x88c    8080     Set V0 = V8
+  0x88e    E0C0     Unknown opcode 0xe0c0
+  0x890    A0A0     Set index register I = 0x0a0
+  0x892    C0E0     Set V0 = random byte AND 0xe0
+  0x894    C080     Set V0 = random byte AND 0x80
+  0x896    E0E0     Unknown opcode 0xe0e0
+  0x898    80C0     Set V0 = VC
+  0x89a    8060     Set V0 = V6
+  0x89c    80A0     Set V0 = VA
+  0x89e    60A0     Set V0 = 0xa0
+  0x8a0    E0A0     Unknown opcode 0xe0a0
+  0x8a2    A0E0     Set index register I = 0x0e0
+  0x8a4    4040     Skip next instruction if V0 != 0x40
+  0x8a6    E060     Unknown opcode 0xe060
+  0x8a8    2020     Call subroutine at 0x020
+  0x8aa    C0A0     Set V0 = random byte AND 0xa0
+  0x8ac    C0A0     Set V0 = random byte AND 0xa0
+  0x8ae    A080     Set index register I = 0x080
+  0x8b0    8080     Set V0 = V8
+  0x8b2    E0E0     Unknown opcode 0xe0e0
+  0x8b4    E0A0     Unknown opcode 0xe0a0
+  0x8b6    A0C0     Set index register I = 0x0c0
+  0x8b8    A0A0     Set index register I = 0x0a0
+  0x8ba    A0E0     Set index register I = 0x0e0
+  0x8bc    A0A0     Set index register I = 0x0a0
+  0x8be    E0C0     Unknown opcode 0xe0c0
+  0x8c0    A0C0     Set index register I = 0x0c0
+  0x8c2    8040     Set V0 = V4
+  0x8c4    A0E0     Set index register I = 0x0e0
+  0x8c6    60C0     Set V0 = 0xc0
+  0x8c8    A0C0     Set index register I = 0x0c0
+  0x8ca    A060     Set index register I = 0x060
+  0x8cc    C020     Set V0 = random byte AND 0x20
+  0x8ce    C0E0     Set V0 = random byte AND 0xe0
+  0x8d0    4040     Skip next instruction if V0 != 0x40
+  0x8d2    40A0     Skip next instruction if V0 != 0xa0
+  0x8d4    A0A0     Set index register I = 0x0a0
+  0x8d6    60A0     Set V0 = 0xa0
+  0x8d8    A0A0     Set index register I = 0x0a0
+  0x8da    40A0     Skip next instruction if V0 != 0xa0
+  0x8dc    A0E0     Set index register I = 0x0e0
+  0x8de    E0A0     Unknown opcode 0xe0a0
+  0x8e0    40A0     Skip next instruction if V0 != 0xa0
+  0x8e2    A0A0     Set index register I = 0x0a0
+  0x8e4    A040     Set index register I = 0x040
+  0x8e6    40E0     Skip next instruction if V0 != 0xe0
+  0x8e8    6080     Set V0 = 0x80
+  0x8ea    E000     Unknown opcode 0xe000
+  0x8ec    0000     Unknown opcode 0x0000
+  0x8ee    0000     Unknown opcode 0x0000
+  0x8f0    E000     Unknown opcode 0xe000
+  0x8f2    0000     Unknown opcode 0x0000
+  0x8f4    0000     Unknown opcode 0x0000
+  0x8f6    4006     Skip next instruction if V0 != 0x06
+  0x8f8    0B03     Unknown opcode 0x0b03
+  0x8fa    8006     Shift V0 right by 1, VF = shifted-out bit
+  0x8fc    1003     Jump to address 0x003
+  0x8fe    4C06     Skip next instruction if VC != 0x06
+  0x900    1503     Jump to address 0x503
+  0x902    9868     Unknown opcode 0x9868
+  0x904    4C34     Skip next instruction if VC != 0x34
+  0x906    5494     Unknown opcode 0x5494
+  0x908    6858     Set V8 = 0x58
+  0x90a    2C78     Call subroutine at 0xc78
+  0x90c    4064     Skip next instruction if V0 != 0x64
+  0x90e    705C     Add 0x5c to V0 (no carry flag)
+  0x910    0008     Unknown opcode 0x0008
+  0x912    9434     Unknown opcode 0x9434
+  0x914    484C     Skip next instruction if V8 != 0x4c
+  0x916    6898     Set V8 = 0x98
+  0x918    2400     Call subroutine at 0x400
+  0x91a    0C94     Unknown opcode 0x0c94
+  0x91c    747C     Add 0x7c to V4 (no carry flag)
+  0x91e    683C     Set V8 = 0x3c
+  0x920    7098     Add 0x98 to V0 (no carry flag)
+  0x922    3448     Skip next instruction if V4 == 0x48
+  0x924    4C68     Skip next instruction if VC != 0x68
+  0x926    0010     Unknown opcode 0x0010
+  0x928    9488     Unknown opcode 0x9488
+  0x92a    6498     Set V4 = 0x98
+  0x92c    3448     Skip next instruction if V4 == 0x48
+  0x92e    4C68     Skip next instruction if VC != 0x68
+  0x930    000E     Unknown opcode 0x000e
+  0x932    0D03     Unknown opcode 0x0d03
+  0x934    880E     Shift V8 left by 1, VF = shifted-out bit
+  0x936    1203     Jump to address 0x203
+  0x938    9068     Unknown opcode 0x9068
+  0x93a    4C34     Skip next instruction if VC != 0x34
+  0x93c    5494     Unknown opcode 0x5494
+  0x93e    782C     Add 0x2c to V8 (no carry flag)
+  0x940    7044     Add 0x44 to V0 (no carry flag)
+  0x942    3C78     Skip next instruction if VC == 0x78
+  0x944    0008     Unknown opcode 0x0008
+  0x946    945C     Unknown opcode 0x945c
+  0x948    6438     Set V4 = 0x38
+  0x94a    3C70     Skip next instruction if VC == 0x70
+  0x94c    6000     Set V0 = 0x00
+  0x94e    0C94     Unknown opcode 0x0c94
+  0x950    583C     Unknown opcode 0x583c
+  0x952    442C     Skip next instruction if V4 != 0x2c
+  0x954    348C     Skip next instruction if V4 == 0x8c
+  0x956    0080     Unknown opcode 0x0080
+  0x958    4094     Skip next instruction if V0 != 0x94
+  0x95a    703C     Add 0x3c to V0 (no carry flag)
+  0x95c    743C     Add 0x3c to V4 (no carry flag)
+  0x95e    7800     Add 0x00 to V8 (no carry flag)
+  0x960    5C3C     Unknown opcode 0x5c3c
+  0x962    5C64     Unknown opcode 0x5c64
+  0x964    708C     Add 0x8c to V0 (no carry flag)
+  0x966    0038     Unknown opcode 0x0038
+  0x968    4C74     Skip next instruction if VC != 0x74
+  0x96a    689C     Set V8 = 0x9c
+  0x96c    842C     Unknown opcode 0x842c
+  0x96e    4C78     Skip next instruction if VC != 0x78
+  0x970    0034     Unknown opcode 0x0034
+  0x972    584C     Unknown opcode 0x584c
+  0x974    6868     Set V8 = 0x68
+  0x976    4C60     Skip next instruction if VC != 0x60
+  0x978    4400     Skip next instruction if V4 != 0x00
+  0x97a    7448     Add 0x48 to V4 (no carry flag)
+  0x97c    4C40     Skip next instruction if VC != 0x40
+  0x97e    784C     Add 0x4c to V8 (no carry flag)
+  0x980    6044     Set V0 = 0x44
+  0x982    0050     Unknown opcode 0x0050
+  0x984    7C5C     Add 0x5c to VC (no carry flag)
+  0x986    684C     Set V8 = 0x4c
+  0x988    6044     Set V0 = 0x44
+  0x98a    0064     Unknown opcode 0x0064
+  0x98c    6000     Set V0 = 0x00
+  0x98e    6440     Set V4 = 0x40
+  0x990    4000     Skip next instruction if V0 != 0x00
+  0x992    7458     Add 0x58 to V4 (no carry flag)
+  0x994    6484     Set V4 = 0x84
+  0x996    0058     Unknown opcode 0x0058
+  0x998    703C     Add 0x3c to V0 (no carry flag)
+  0x99a    7400     Add 0x00 to V4 (no carry flag)
+  0x99c    4870     Skip next instruction if V8 != 0x70
+  0x99e    3C74     Skip next instruction if VC == 0x74
+  0x9a0    0030     Unknown opcode 0x0030
+  0x9a2    6478     Set V4 = 0x78
+  0x9a4    4800     Skip next instruction if V8 != 0x00
+  0x9a6    6064     Set V0 = 0x64
+  0x9a8    603C     Set V0 = 0x3c
+  0x9aa    003C     Unknown opcode 0x003c
+  0x9ac    7070     Add 0x70 to V0 (no carry flag)
+  0x9ae    0800     Unknown opcode 0x0800
+  0x9b0    3C70     Skip next instruction if VC == 0x70
+  0x9b2    700C     Add 0x0c to V0 (no carry flag)
+  0x9b4    003C     Unknown opcode 0x003c
+  0x9b6    7070     Add 0x70 to V0 (no carry flag)
+  0x9b8    1000     Jump to address 0x000
+  0x9ba    FEFE     Unknown opcode 0xfefe
+  0x9bc    FEFE     Unknown opcode 0xfefe
+  0x9be    FEFE     Unknown opcode 0xfefe
+  0x9c0    0A1F     Unknown opcode 0x0a1f
+  0x9c2    0000     Unknown opcode 0x0000
+  0x9c4    01B4     Unknown opcode 0x01b4
+  0x9c6    0080     Unknown opcode 0x0080
+  0x9c8    80FF     Unknown opcode 0x80ff
+  0x9ca    FF0A     Wait for any key press, store key in VF (blocking)
+  0x9cc    AEA2     Set index register I = 0xea2
+  0x9ce    4238     Skip next instruction if V2 != 0x38
+  0x9d0    0830     Unknown opcode 0x0830
+  0x9d2    B80F     Jump to address 0x80f + V0
+  0x9d4    0202     Unknown opcode 0x0202
+  0x9d6    0202     Unknown opcode 0x0202
+  0x9d8    0200     Unknown opcode 0x0200
+  0x9da    001F     Unknown opcode 0x001f
+  0x9dc    3F71     Skip next instruction if VF == 0x71
+  0x9de    E0E5     Unknown opcode 0xe0e5
+  0x9e0    E0E8     Unknown opcode 0xe0e8
+  0x9e2    A00D     Set index register I = 0x00d
+  0x9e4    2A28     Call subroutine at 0xa28
+  0x9e6    2828     Call subroutine at 0x828
+  0x9e8    0000     Unknown opcode 0x0000
+  0x9ea    18B8     Jump to address 0x8b8
+  0x9ec    B838     Jump to address 0x838 + V0
+  0x9ee    383F     Skip next instruction if V8 == 0x3f
+  0x9f0    BF00     Jump to address 0xf00 + V0
+  0x9f2    19A5     Jump to address 0x9a5
+  0x9f4    BDA1     Jump to address 0xda1 + V0
+  0x9f6    9D00     Skip next instruction if VD != V0
+  0x9f8    000C     Unknown opcode 0x000c
+  0x9fa    1D1D     Jump to address 0xd1d
+  0x9fc    010D     Unknown opcode 0x010d
+  0x9fe    1D9D     Jump to address 0xd9d
+  0xa00    01C7     Unknown opcode 0x01c7
+  0xa02    2929     Call subroutine at 0x929
+  0xa04    2927     Call subroutine at 0x927
+  0xa06    0000     Unknown opcode 0x0000
+  0xa08    F8FC     Unknown opcode 0xf8fc
+  0xa0a    CEC6     Set VE = random byte AND 0xc6
+  0xa0c    C6C6     Set V6 = random byte AND 0xc6
+  0xa0e    C600     Set V6 = random byte AND 0x00
+  0xa10    494A     Skip next instruction if V9 != 0x4a
+  0xa12    4948     Skip next instruction if V9 != 0x48
+  0xa14    3B00     Skip next instruction if VB == 0x00
+  0xa16    0000     Unknown opcode 0x0000
+  0xa18    0103     Unknown opcode 0x0103
+  0xa1a    0303     Unknown opcode 0x0303
+  0xa1c    01F0     Unknown opcode 0x01f0
+  0xa1e    3090     Skip next instruction if V0 == 0x90
+  0xa20    0000     Unknown opcode 0x0000
+  0xa22    8000     Set V0 = V0
+  0xa24    0000     Unknown opcode 0x0000
+  0xa26    FEC7     Unknown opcode 0xfec7
+  0xa28    8383     Set V3 = V3 XOR V8
+  0xa2a    83C6     Shift V3 right by 1, VF = shifted-out bit
+  0xa2c    FCE7     Unknown opcode 0xfce7
+  0xa2e    E0E0     Unknown opcode 0xe0e0
+  0xa30    E0E0     Unknown opcode 0xe0e0
+  0xa32    713F     Add 0x3f to V1 (no carry flag)
+  0xa34    1F00     Jump to address 0xf00
+  0xa36    0007     Unknown opcode 0x0007
+  0xa38    0202     Unknown opcode 0x0202
+  0xa3a    0202     Unknown opcode 0x0202
+  0xa3c    3938     Skip next instruction if V9 == 0x38
+  0xa3e    3838     Skip next instruction if V8 == 0x38
+  0xa40    38B8     Skip next instruction if V8 == 0xb8
+  0xa42    B838     Jump to address 0x838 + V0
+  0xa44    0000     Unknown opcode 0x0000
+  0xa46    314A     Skip next instruction if V1 == 0x4a
+  0xa48    7940     Add 0x40 to V9 (no carry flag)
+  0xa4a    3BDD     Skip next instruction if VB == 0xdd
+  0xa4c    DDDD     Draw 13-byte sprite from [I] at (VD, VD), VF = collision
+  0xa4e    DDDD     Draw 13-byte sprite from [I] at (VD, VD), VF = collision
+  0xa50    DDDD     Draw 13-byte sprite from [I] at (VD, VD), VF = collision
+  0xa52    DD00     Draw 16x16 sprite (SUPER-CHIP) from [I] at (VD, V0), VF = collision
+  0xa54    00A0     Unknown opcode 0x00a0
+  0xa56    3820     Skip next instruction if V8 == 0x20
+  0xa58    A018     Set index register I = 0x018
+  0xa5a    CEFC     Set VE = random byte AND 0xfc
+  0xa5c    F8C0     Unknown opcode 0xf8c0
+  0xa5e    D4DC     Draw 12-byte sprite from [I] at (V4, VD), VF = collision
+  0xa60    C4C5     Set V4 = random byte AND 0xc5
+  0xa62    0000     Unknown opcode 0x0000
+  0xa64    3044     Skip next instruction if V0 == 0x44
+  0xa66    2414     Call subroutine at 0x414
+  0xa68    63F1     Set V3 = 0xf1
+  0xa6a    0307     Unknown opcode 0x0307
+  0xa6c    0777     Unknown opcode 0x0777
+  0xa6e    1763     Jump to address 0x763
+  0xa70    7100     Add 0x00 to V1 (no carry flag)
+  0xa72    0028     Unknown opcode 0x0028
+  0xa74    8EA8     Unknown opcode 0x8ea8
+  0xa76    A8A6     Set index register I = 0x8a6
+  0xa78    CE87     Set VE = random byte AND 0x87
+  0xa7a    0303     Unknown opcode 0x0303
+  0xa7c    0387     Unknown opcode 0x0387
+  0xa7e    FEFC     Unknown opcode 0xfefc
+  0xa80    0000     Unknown opcode 0x0000
+  0xa82    6090     Set V0 = 0x90
+  0xa84    F080     Unknown opcode 0xf080
+  0xa86    7000     Add 0x00 to V0 (no carry flag)
+  0xa88    FF00     Unknown opcode 0xff00
+  0xa8a    FF00     Unknown opcode 0xff00
+  0xa8c    0C00     Unknown opcode 0x0c00
+  0xa8e    0C00     Unknown opcode 0x0c00
+  0xa90    0C00     Unknown opcode 0x0c00
+  0xa92    0C00     Unknown opcode 0x0c00
+  0xa94    0C00     Unknown opcode 0x0c00
+  0xa96    0C00     Unknown opcode 0x0c00
+  0xa98    0C00     Unknown opcode 0x0c00
+  0xa9a    0C00     Unknown opcode 0x0c00
+  0xa9c    0C00     Unknown opcode 0x0c00
+  0xa9e    0C00     Unknown opcode 0x0c00
+  0xaa0    0000     Unknown opcode 0x0000
+  0xaa2    0000     Unknown opcode 0x0000
+  0xaa4    0000     Unknown opcode 0x0000
+  0xaa6    00CC     Scroll screen down by 12 pixels
+  0xaa8    00CC     Scroll screen down by 12 pixels
+  0xaaa    0000     Unknown opcode 0x0000
+  0xaac    F300     Unknown opcode 0xf300
+  0xaae    F30C     Unknown opcode 0xf30c
+  0xab0    CC0C     Set VC = random byte AND 0x0c
+  0xab2    CC0C     Set VC = random byte AND 0x0c
+  0xab4    C00C     Set V0 = random byte AND 0x0c
+  0xab6    C00C     Set V0 = random byte AND 0x0c
+  0xab8    C00C     Set V0 = random byte AND 0x0c
+  0xaba    C00C     Set V0 = random byte AND 0x0c
+  0xabc    C00C     Set V0 = random byte AND 0x0c
+  0xabe    C000     Set V0 = random byte AND 0x00
+  0xac0    0000     Unknown opcode 0x0000
+  0xac2    0000     Unknown opcode 0x0000
+  0xac4    0000     Unknown opcode 0x0000
+  0xac6    0000     Unknown opcode 0x0000
+  0xac8    0000     Unknown opcode 0x0000
+  0xaca    0003     Unknown opcode 0x0003
+  0xacc    C303     Set V3 = random byte AND 0x03
+  0xace    C3CC     Set V3 = random byte AND 0xcc
+  0xad0    33CC     Skip next instruction if V3 == 0xcc
+  0xad2    33CF     Skip next instruction if V3 == 0xcf
+  0xad4    F3CF     Unknown opcode 0xf3cf
+  0xad6    F3CC     Unknown opcode 0xf3cc
+  0xad8    03CC     Unknown opcode 0x03cc
+  0xada    03C3     Unknown opcode 0x03c3
+  0xadc    F3C3     Unknown opcode 0xf3c3
+  0xade    F300     Unknown opcode 0xf300
+  0xae0    0000     Unknown opcode 0x0000
+  0xae2    0000     Unknown opcode 0x0000
+  0xae4    0000     Unknown opcode 0x0000
+  0xae6    0000     Unknown opcode 0x0000
+  0xae8    0300     Unknown opcode 0x0300
+  0xaea    03F0     Unknown opcode 0x03f0
+  0xaec    3FF0     Skip next instruction if VF == 0xf0
+  0xaee    3F0C     Skip next instruction if VF == 0x0c
+  0xaf0    C30C     Set V3 = random byte AND 0x0c
+  0xaf2    C30C     Set V3 = random byte AND 0x0c
+  0xaf4    C30C     Set V3 = random byte AND 0x0c
+  0xaf6    C30C     Set V3 = random byte AND 0x0c
+  0xaf8    C30C     Set V3 = random byte AND 0x0c
+  0xafa    C30C     Set V3 = random byte AND 0x0c
+  0xafc    3F0C     Skip next instruction if VF == 0x0c
+  0xafe    3F00     Skip next instruction if VF == 0x00
+  0xb00    0000     Unknown opcode 0x0000
+  0xb02    0000     Unknown opcode 0x0000
+  0xb04    0000     Unknown opcode 0x0000
+  0xb06    0000     Unknown opcode 0x0000
+  0xb08    0000     Unknown opcode 0x0000
+  0xb0a    0030     Unknown opcode 0x0030
+  0xb0c    C330     Set V3 = random byte AND 0x30
+  0xb0e    C330     Set V3 = random byte AND 0x30
+  0xb10    CC30     Set VC = random byte AND 0x30
+  0xb12    CC30     Set VC = random byte AND 0x30
+  0xb14    C330     Set V3 = random byte AND 0x30
+  0xb16    C330     Set V3 = random byte AND 0x30
+  0xb18    C030     Set V0 = random byte AND 0x30
+  0xb1a    C00F     Set V0 = random byte AND 0x0f
+  0xb1c    CF0F     Set VF = random byte AND 0x0f
+  0xb1e    CF00     Set VF = random byte AND 0x00
+  0xb20    0000     Unknown opcode 0x0000
+  0xb22    0000     Unknown opcode 0x0000
+  0xb24    0000     Unknown opcode 0x0000
+  0xb26    000F     Unknown opcode 0x000f
+  0xb28    000F     Unknown opcode 0x000f
+  0xb2a    00C3     Scroll screen down by 3 pixels
+  0xb2c    00C3     Scroll screen down by 3 pixels
+  0xb2e    0000     Unknown opcode 0x0000
+  0xb30    0000     Unknown opcode 0x0000
+  0xb32    0000     Unknown opcode 0x0000
+  0xb34    0000     Unknown opcode 0x0000
+  0xb36    00C0     Scroll screen down by 0 pixels
+  0xb38    00C0     Scroll screen down by 0 pixels
+  0xb3a    0000     Unknown opcode 0x0000
+  0xb3c    0000     Unknown opcode 0x0000
+  0xb3e    0000     Unknown opcode 0x0000
+  0xb40    0000     Unknown opcode 0x0000
+  0xb42    0000     Unknown opcode 0x0000
+  0xb44    0000     Unknown opcode 0x0000
+  0xb46    0003     Unknown opcode 0x0003
+  0xb48    FF03     Unknown opcode 0xff03
+  0xb4a    FF0F     Unknown opcode 0xff0f
+  0xb4c    FF0F     Unknown opcode 0xff0f
+  0xb4e    FF3F     Unknown opcode 0xff3f
+  0xb50    033F     Unknown opcode 0x033f
+  0xb52    03FC     Unknown opcode 0x03fc
+  0xb54    00FC     Scroll screen left by 4 pixels
+  0xb56    00FC     Scroll screen left by 4 pixels
+  0xb58    33FC     Skip next instruction if V3 == 0xfc
+  0xb5a    33FC     Skip next instruction if V3 == 0xfc
+  0xb5c    00FC     Scroll screen left by 4 pixels
+  0xb5e    00FC     Scroll screen left by 4 pixels
+  0xb60    C0FC     Set V0 = random byte AND 0xfc
+  0xb62    C0FC     Set V0 = random byte AND 0xfc
+  0xb64    3FFC     Skip next instruction if VF == 0xfc
+  0xb66    3F03     Skip next instruction if VF == 0x03
+  0xb68    C003     Set V0 = random byte AND 0x03
+  0xb6a    C0CF     Set V0 = random byte AND 0xcf
+  0xb6c    C0CF     Set V0 = random byte AND 0xcf
+  0xb6e    C0CF     Set V0 = random byte AND 0xcf
+  0xb70    C0CF     Set V0 = random byte AND 0xcf
+  0xb72    C00F     Set V0 = random byte AND 0x0f
+  0xb74    C00F     Set V0 = random byte AND 0x0f
+  0xb76    C00F     Set V0 = random byte AND 0x0f
+  0xb78    C00F     Set V0 = random byte AND 0x0f
+  0xb7a    C00F     Set V0 = random byte AND 0x0f
+  0xb7c    FF0F     Unknown opcode 0xff0f
+  0xb7e    FFCF     Unknown opcode 0xffcf
+  0xb80    FFCF     Unknown opcode 0xffcf
+  0xb82    FF0F     Unknown opcode 0xff0f
+  0xb84    C30F     Set V3 = random byte AND 0x0f
+  0xb86    C300     Set V3 = random byte AND 0x00
+  0xb88    F000     Unknown opcode 0xf000
+  0xb8a    F003     Unknown opcode 0xf003
+  0xb8c    F303     Unknown opcode 0xf303
+  0xb8e    F303     Unknown opcode 0xf303
+  0xb90    F303     Unknown opcode 0xf303
+  0xb92    F300     Unknown opcode 0xf300
+  0xb94    0300     Unknown opcode 0x0300
+  0xb96    0300     Unknown opcode 0x0300
+  0xb98    F300     Unknown opcode 0xf300
+  0xb9a    F303     Unknown opcode 0xf303
+  0xb9c    F303     Unknown opcode 0xf303
+  0xb9e    F3C3     Unknown opcode 0xf3c3
+  0xba0    F3C3     Unknown opcode 0xf3c3
+  0xba2    F3F3     Unknown opcode 0xf3f3
+  0xba4    F3F3     Unknown opcode 0xf3f3
+  0xba6    F3FF     Unknown opcode 0xf3ff
+  0xba8    C0FF     Set V0 = random byte AND 0xff
+  0xbaa    C0FF     Set V0 = random byte AND 0xff
+  0xbac    F0FF     Unknown opcode 0xf0ff
+  0xbae    F0F0     Unknown opcode 0xf0f0
+  0xbb0    FCF0     Unknown opcode 0xfcf0
+  0xbb2    FCF0     Unknown opcode 0xfcf0
+  0xbb4    3CF0     Skip next instruction if VC == 0xf0
+  0xbb6    3CF0     Skip next instruction if VC == 0xf0
+  0xbb8    3CF0     Skip next instruction if VC == 0xf0
+  0xbba    3CF0     Skip next instruction if VC == 0xf0
+  0xbbc    3CF0     Skip next instruction if VC == 0xf0
+  0xbbe    3CF0     Skip next instruction if VC == 0xf0
+  0xbc0    3CF0     Skip next instruction if VC == 0xf0
+  0xbc2    3CF0     Skip next instruction if VC == 0xf0
+  0xbc4    FCF0     Unknown opcode 0xfcf0
+  0xbc6    FC00     Unknown opcode 0xfc00
+  0xbc8    0000     Unknown opcode 0x0000
+  0xbca    0000     Unknown opcode 0x0000
+  0xbcc    0300     Unknown opcode 0x0300
+  0xbce    0300     Unknown opcode 0x0300
+  0xbd0    0F00     Unknown opcode 0x0f00
+  0xbd2    0F00     Unknown opcode 0x0f00
+  0xbd4    0F00     Unknown opcode 0x0f00
+  0xbd6    0F00     Unknown opcode 0x0f00
+  0xbd8    0F00     Unknown opcode 0x0f00
+  0xbda    0F00     Unknown opcode 0x0f00
+  0xbdc    0300     Unknown opcode 0x0300
+  0xbde    03FF     Unknown opcode 0x03ff
+  0xbe0    00FF     Switch to high-resolution mode (128x64)
+  0xbe2    00FF     Switch to high-resolution mode (128x64)
+  0xbe4    03FF     Unknown opcode 0x03ff
+  0xbe6    03FF     Unknown opcode 0x03ff
+  0xbe8    FCFF     Unknown opcode 0xfcff
+  0xbea    FCF0     Unknown opcode 0xfcf0
+  0xbec    3FF0     Skip next instruction if VF == 0xf0
+  0xbee    3FC0     Skip next instruction if VF == 0xc0
+  0xbf0    0FC0     Unknown opcode 0x0fc0
+  0xbf2    0FC0     Unknown opcode 0x0fc0
+  0xbf4    0FC0     Unknown opcode 0x0fc0
+  0xbf6    0FC0     Unknown opcode 0x0fc0
+  0xbf8    0FC0     Unknown opcode 0x0fc0
+  0xbfa    0FF0     Unknown opcode 0x0ff0
+  0xbfc    3CF0     Skip next instruction if VC == 0xf0
+  0xbfe    3CFF     Skip next instruction if VC == 0xff
+  0xc00    F0FF     Unknown opcode 0xf0ff
+  0xc02    F0F0     Unknown opcode 0xf0f0
+  0xc04    FCF0     Unknown opcode 0xfcf0
+  0xc06    FCFC     Unknown opcode 0xfcfc
+  0xc08    00FC     Scroll screen left by 4 pixels
+  0xc0a    00FC     Scroll screen left by 4 pixels
+  0xc0c    00FC     Scroll screen left by 4 pixels
+  0xc0e    00FC     Scroll screen left by 4 pixels
+  0xc10    00FC     Scroll screen left by 4 pixels
+  0xc12    00FC     Scroll screen left by 4 pixels
+  0xc14    00FC     Scroll screen left by 4 pixels
+  0xc16    003F     Unknown opcode 0x003f
+  0xc18    033F     Unknown opcode 0x033f
+  0xc1a    030F     Unknown opcode 0x030f
+  0xc1c    FF0F     Unknown opcode 0xff0f
+  0xc1e    FF03     Unknown opcode 0xff03
+  0xc20    FF03     Unknown opcode 0xff03
+  0xc22    FF00     Unknown opcode 0xff00
+  0xc24    0000     Unknown opcode 0x0000
+  0xc26    000F     Unknown opcode 0x000f
+  0xc28    C00F     Set V0 = random byte AND 0x0f
+  0xc2a    C00F     Set V0 = random byte AND 0x0f
+  0xc2c    C00F     Set V0 = random byte AND 0x0f
+  0xc2e    C00F     Set V0 = random byte AND 0x0f
+  0xc30    C00F     Set V0 = random byte AND 0x0f
+  0xc32    C00F     Set V0 = random byte AND 0x0f
+  0xc34    C00F     Set V0 = random byte AND 0x0f
+  0xc36    C0CF     Set V0 = random byte AND 0xcf
+  0xc38    C0CF     Set V0 = random byte AND 0xcf
+  0xc3a    C0CF     Set V0 = random byte AND 0xcf
+  0xc3c    C0CF     Set V0 = random byte AND 0xcf
+  0xc3e    C00F     Set V0 = random byte AND 0x0f
+  0xc40    C00F     Set V0 = random byte AND 0x0f
+  0xc42    C000     Set V0 = random byte AND 0x00
+  0xc44    0000     Unknown opcode 0x0000
+  0xc46    00F3     Unknown opcode 0x00f3
+  0xc48    F3F3     Unknown opcode 0xf3f3
+  0xc4a    F3F3     Unknown opcode 0xf3f3
+  0xc4c    F3F3     Unknown opcode 0xf3f3
+  0xc4e    F3F3     Unknown opcode 0xf3f3
+  0xc50    F3F3     Unknown opcode 0xf3f3
+  0xc52    F3F3     Unknown opcode 0xf3f3
+  0xc54    F3F3     Unknown opcode 0xf3f3
+  0xc56    F3F3     Unknown opcode 0xf3f3
+  0xc58    F3F3     Unknown opcode 0xf3f3
+  0xc5a    F3F3     Unknown opcode 0xf3f3
+  0xc5c    F3F3     Unknown opcode 0xf3f3
+  0xc5e    F3F3     Unknown opcode 0xf3f3
+  0xc60    F3F3     Unknown opcode 0xf3f3
+  0xc62    F300     Unknown opcode 0xf300
+  0xc64    0000     Unknown opcode 0x0000
+  0xc66    00FF     Switch to high-resolution mode (128x64)
+  0xc68    F0FF     Unknown opcode 0xf0ff
+  0xc6a    F0FF     Unknown opcode 0xf0ff
+  0xc6c    C0FF     Set V0 = random byte AND 0xff
+  0xc6e    C0F0     Set V0 = random byte AND 0xf0
+  0xc70    00F0     Unknown opcode 0x00f0
+  0xc72    00F3     Unknown opcode 0x00f3
+  0xc74    30F3     Skip next instruction if V0 == 0xf3
+  0xc76    30F3     Skip next instruction if V0 == 0xf3
+  0xc78    F0F3     Unknown opcode 0xf0f3
+  0xc7a    F0F0     Unknown opcode 0xf0f0
+  0xc7c    30F0     Skip next instruction if V0 == 0xf0
+  0xc7e    30F0     Skip next instruction if V0 == 0xf0
+  0xc80    33F0     Skip next instruction if V3 == 0xf0
+  0xc82    3300     Skip next instruction if V3 == 0x00
+  0xc84    0000     Unknown opcode 0x0000
+  0xc86    0000     Unknown opcode 0x0000
+  0xc88    0F00     Unknown opcode 0x0f00
+  0xc8a    0F00     Unknown opcode 0x0f00
+  0xc8c    3F00     Skip next instruction if VF == 0x00
+  0xc8e    3F00     Skip next instruction if VF == 0x00
+  0xc90    3F00     Skip next instruction if VF == 0x00
+  0xc92    3F3F     Skip next instruction if VF == 0x3f
+  0xc94    3F3F     Skip next instruction if VF == 0x3f
+  0xc96    3F03     Skip next instruction if VF == 0x03
+  0xc98    3F03     Skip next instruction if VF == 0x03
+  0xc9a    3F3C     Skip next instruction if VF == 0x3c
+  0xc9c    0F3C     Unknown opcode 0x0f3c
+  0xc9e    0F3F     Unknown opcode 0x0f3f
+  0xca0    033F     Unknown opcode 0x033f
+  0xca2    0300     Unknown opcode 0x0300
+  0xca4    0000     Unknown opcode 0x0000
+  0xca6    00C0     Scroll screen down by 0 pixels
+  0xca8    3FC0     Skip next instruction if VF == 0xc0
+  0xcaa    3F00     Skip next instruction if VF == 0x00
+  0xcac    0F00     Unknown opcode 0x0f00
+  0xcae    0F00     Unknown opcode 0x0f00
+  0xcb0    0F00     Unknown opcode 0x0f00
+  0xcb2    0F00     Unknown opcode 0x0f00
+  0xcb4    0F00     Unknown opcode 0x0f00
+  0xcb6    0FC0     Unknown opcode 0x0fc0
+  0xcb8    3FC0     Skip next instruction if VF == 0xc0
+  0xcba    3FFF     Skip next instruction if VF == 0xff
+  0xcbc    FCFF     Unknown opcode 0xfcff
+  0xcbe    FCFF     Unknown opcode 0xfcff
+  0xcc0    F0FF     Unknown opcode 0xf0ff
+  0xcc2    F000     Unknown opcode 0xf000
+  0xcc4    0000     Unknown opcode 0x0000
+  0xcc6    0000     Unknown opcode 0x0000
+  0xcc8    0000     Unknown opcode 0x0000
+  0xcca    0000     Unknown opcode 0x0000
+  0xccc    3F00     Skip next instruction if VF == 0x00
+  0xcce    3F00     Skip next instruction if VF == 0x00
+  0xcd0    0C00     Unknown opcode 0x0c00
+  0xcd2    0C00     Unknown opcode 0x0c00
+  0xcd4    0C00     Unknown opcode 0x0c00
+  0xcd6    0C00     Unknown opcode 0x0c00
+  0xcd8    0C00     Unknown opcode 0x0c00
+  0xcda    0C00     Unknown opcode 0x0c00
+  0xcdc    0C00     Unknown opcode 0x0c00
+  0xcde    0C00     Unknown opcode 0x0c00
+  0xce0    0000     Unknown opcode 0x0000
+  0xce2    0000     Unknown opcode 0x0000
+  0xce4    0000     Unknown opcode 0x0000
+  0xce6    0000     Unknown opcode 0x0000
+  0xce8    0000     Unknown opcode 0x0000
+  0xcea    000F     Unknown opcode 0x000f
+  0xcec    030F     Unknown opcode 0x030f
+  0xcee    0330     Unknown opcode 0x0330
+  0xcf0    CC30     Set VC = random byte AND 0x30
+  0xcf2    CC3F     Set VC = random byte AND 0x3f
+  0xcf4    C33F     Set V3 = random byte AND 0x3f
+  0xcf6    C330     Set V3 = random byte AND 0x30
+  0xcf8    0030     Unknown opcode 0x0030
+  0xcfa    000F     Unknown opcode 0x000f
+  0xcfc    CF0F     Set VF = random byte AND 0x0f
+  0xcfe    CF00     Set VF = random byte AND 0x00
+  0xd00    0000     Unknown opcode 0x0000
+  0xd02    0000     Unknown opcode 0x0000
+  0xd04    0000     Unknown opcode 0x0000
+  0xd06    0000     Unknown opcode 0x0000
+  0xd08    0000     Unknown opcode 0x0000
+  0xd0a    00CC     Scroll screen down by 12 pixels
+  0xd0c    00CC     Scroll screen down by 12 pixels
+  0xd0e    000F     Unknown opcode 0x000f
+  0xd10    C00F     Set V0 = random byte AND 0x0f
+  0xd12    C00C     Set V0 = random byte AND 0x0c
+  0xd14    000C     Unknown opcode 0x000c
+  0xd16    00CC     Scroll screen down by 12 pixels
+  0xd18    00CC     Scroll screen down by 12 pixels
+  0xd1a    0003     Unknown opcode 0x0003
+  0xd1c    C003     Set V0 = random byte AND 0x03
+  0xd1e    C000     Set V0 = random byte AND 0x00
+  0xd20    0000     Unknown opcode 0x0000
+  0xd22    0000     Unknown opcode 0x0000
+  0xd24    0000     Unknown opcode 0x0000
+  0xd26    0000     Unknown opcode 0x0000
+  0xd28    0000     Unknown opcode 0x0000
+  0xd2a    000F     Unknown opcode 0x000f
+  0xd2c    000F     Unknown opcode 0x000f
+  0xd2e    0030     Unknown opcode 0x0030
+  0xd30    3030     Skip next instruction if V0 == 0x30
+  0xd32    300C     Skip next instruction if V0 == 0x0c
+  0xd34    300C     Skip next instruction if V0 == 0x0c
+  0xd36    3003     Skip next instruction if V0 == 0x03
+  0xd38    3003     Skip next instruction if V0 == 0x03
+  0xd3a    303C     Skip next instruction if V0 == 0x3c
+  0xd3c    0F3C     Unknown opcode 0x0f3c
+  0xd3e    0F00     Unknown opcode 0x0f00
+  0xd40    0000     Unknown opcode 0x0000
+  0xd42    0000     Unknown opcode 0x0000
+  0xd44    0000     Unknown opcode 0x0000
+  0xd46    0000     Unknown opcode 0x0000
+  0xd48    0000     Unknown opcode 0x0000
+  0xd4a    000C     Unknown opcode 0x000c
+  0xd4c    C00C     Set V0 = random byte AND 0x0c
+  0xd4e    C0C0     Set V0 = random byte AND 0xc0
+  0xd50    FCC0     Unknown opcode 0xfcc0
+  0xd52    FCCC     Unknown opcode 0xfccc
+  0xd54    C0CC     Set V0 = random byte AND 0xcc
+  0xd56    C0CC     Set V0 = random byte AND 0xcc
+  0xd58    C0CC     Set V0 = random byte AND 0xcc
+  0xd5a    C0CC     Set V0 = random byte AND 0xcc
+  0xd5c    3CCC     Skip next instruction if VC == 0xcc
+  0xd5e    3C00     Skip next instruction if VC == 0x00
+  0xd60    0000     Unknown opcode 0x0000
+  0xd62    0000     Unknown opcode 0x0000
+  0xd64    0000     Unknown opcode 0x0000
+  0xd66    0000     Unknown opcode 0x0000
+  0xd68    0000     Unknown opcode 0x0000
+  0xd6a    003C     Unknown opcode 0x003c
+  0xd6c    003C     Unknown opcode 0x003c
+  0xd6e    00C3     Scroll screen down by 3 pixels
+  0xd70    00C3     Scroll screen down by 3 pixels
+  0xd72    00FF     Switch to high-resolution mode (128x64)
+  0xd74    00FF     Switch to high-resolution mode (128x64)
+  0xd76    00C0     Scroll screen down by 0 pixels
+  0xd78    00C0     Scroll screen down by 0 pixels
+  0xd7a    003F     Unknown opcode 0x003f
+  0xd7c    003F     Unknown opcode 0x003f
+  0xd7e    0000     Unknown opcode 0x0000
+  0xd80    0000     Unknown opcode 0x0000
+  0xd82    0000     Unknown opcode 0x0000
+  0xd84    0000     Unknown opcode 0x0000
+  0xd86    0000     Unknown opcode 0x0000
+  0xd88    0000     Unknown opcode 0x0000
+  0xd8a    0000     Unknown opcode 0x0000
+  0xd8c    0000     Unknown opcode 0x0000
+  0xd8e    0000     Unknown opcode 0x0000
+  0xd90    0000     Unknown opcode 0x0000
+  0xd92    0000     Unknown opcode 0x0000
+  0xd94    0000     Unknown opcode 0x0000
+  0xd96    0000     Unknown opcode 0x0000
+  0xd98    0000     Unknown opcode 0x0000
+  0xd9a    0000     Unknown opcode 0x0000
+  0xd9c    0000     Unknown opcode 0x0000
+  0xd9e    0000     Unknown opcode 0x0000
+  0xda0    0000     Unknown opcode 0x0000
+  0xda2    0000     Unknown opcode 0x0000
+  0xda4    0000     Unknown opcode 0x0000
+  0xda6    0000     Unknown opcode 0x0000
+  0xda8    0000     Unknown opcode 0x0000
+  0xdaa    0000     Unknown opcode 0x0000
+  0xdac    0000     Unknown opcode 0x0000
+  0xdae    0000     Unknown opcode 0x0000
+  0xdb0    0000     Unknown opcode 0x0000
+  0xdb2    0000     Unknown opcode 0x0000
+  0xdb4    0000     Unknown opcode 0x0000
+  0xdb6    0000     Unknown opcode 0x0000
+  0xdb8    0000     Unknown opcode 0x0000
+  0xdba    0000     Unknown opcode 0x0000
+  0xdbc    0000     Unknown opcode 0x0000
+  0xdbe    0000     Unknown opcode 0x0000
+  0xdc0    0000     Unknown opcode 0x0000
+  0xdc2    0000     Unknown opcode 0x0000
+  0xdc4    0000     Unknown opcode 0x0000
+  0xdc6    0000     Unknown opcode 0x0000
+  0xdc8    0000     Unknown opcode 0x0000
+  0xdca    0000     Unknown opcode 0x0000
+  0xdcc    0000     Unknown opcode 0x0000
+  0xdce    0000     Unknown opcode 0x0000
+  0xdd0    0000     Unknown opcode 0x0000
+  0xdd2    0000     Unknown opcode 0x0000
+  0xdd4    0000     Unknown opcode 0x0000
+  0xdd6    0000     Unknown opcode 0x0000
+  0xdd8    0000     Unknown opcode 0x0000
+  0xdda    0000     Unknown opcode 0x0000
+  0xddc    0000     Unknown opcode 0x0000
+  0xdde    0000     Unknown opcode 0x0000
+  0xde0    0000     Unknown opcode 0x0000
+  0xde2    0000     Unknown opcode 0x0000
+  0xde4    0000     Unknown opcode 0x0000
+  0xde6    0000     Unknown opcode 0x0000
+  0xde8    0000     Unknown opcode 0x0000
+  0xdea    0000     Unknown opcode 0x0000
+  0xdec    0000     Unknown opcode 0x0000
+  0xdee    0000     Unknown opcode 0x0000
+  0xdf0    0000     Unknown opcode 0x0000
+  0xdf2    0000     Unknown opcode 0x0000
+  0xdf4    0000     Unknown opcode 0x0000
+  0xdf6    0000     Unknown opcode 0x0000
+  0xdf8    0000     Unknown opcode 0x0000
+  0xdfa    0000     Unknown opcode 0x0000
+  0xdfc    0000     Unknown opcode 0x0000
+  0xdfe    0000     Unknown opcode 0x0000
+  0xe00    0000     Unknown opcode 0x0000
+  0xe02    0000     Unknown opcode 0x0000
+  0xe04    0000     Unknown opcode 0x0000
+  0xe06    0000     Unknown opcode 0x0000
+  0xe08    0000     Unknown opcode 0x0000
+  0xe0a    0000     Unknown opcode 0x0000
+  0xe0c    0000     Unknown opcode 0x0000
+  0xe0e    0000     Unknown opcode 0x0000
+  0xe10    0000     Unknown opcode 0x0000
+  0xe12    0000     Unknown opcode 0x0000
+  0xe14    0000     Unknown opcode 0x0000
+  0xe16    0000     Unknown opcode 0x0000
+  0xe18    0000     Unknown opcode 0x0000
+  0xe1a    0000     Unknown opcode 0x0000
+  0xe1c    0000     Unknown opcode 0x0000
+  0xe1e    0000     Unknown opcode 0x0000
+  0xe20    0000     Unknown opcode 0x0000
+  0xe22    0000     Unknown opcode 0x0000
+  0xe24    0000     Unknown opcode 0x0000
+  0xe26    0000     Unknown opcode 0x0000
+  0xe28    0000     Unknown opcode 0x0000
+  0xe2a    0000     Unknown opcode 0x0000
+  0xe2c    0000     Unknown opcode 0x0000
+  0xe2e    0000     Unknown opcode 0x0000
+  0xe30    0000     Unknown opcode 0x0000
+  0xe32    0000     Unknown opcode 0x0000
+  0xe34    0000     Unknown opcode 0x0000
+  0xe36    0000     Unknown opcode 0x0000
+  0xe38    0000     Unknown opcode 0x0000
+  0xe3a    0000     Unknown opcode 0x0000
+  0xe3c    0000     Unknown opcode 0x0000
+  0xe3e    0000     Unknown opcode 0x0000
+  0xe40    0000     Unknown opcode 0x0000
+  0xe42    0000     Unknown opcode 0x0000
+  0xe44    0000     Unknown opcode 0x0000
+  0xe46    0000     Unknown opcode 0x0000
+  0xe48    0000     Unknown opcode 0x0000
+  0xe4a    0000     Unknown opcode 0x0000
+  0xe4c    0000     Unknown opcode 0x0000
+  0xe4e    0000     Unknown opcode 0x0000
+  0xe50    0000     Unknown opcode 0x0000
+  0xe52    0000     Unknown opcode 0x0000
+  0xe54    0000     Unknown opcode 0x0000
+  0xe56    0000     Unknown opcode 0x0000
+  0xe58    0000     Unknown opcode 0x0000
+  0xe5a    0000     Unknown opcode 0x0000
+  0xe5c    0000     Unknown opcode 0x0000
+  0xe5e    0000     Unknown opcode 0x0000
+  0xe60    0000     Unknown opcode 0x0000
+  0xe62    0000     Unknown opcode 0x0000
+  0xe64    0000     Unknown opcode 0x0000
+  0xe66    0000     Unknown opcode 0x0000
+  0xe68    0000     Unknown opcode 0x0000
+  0xe6a    0000     Unknown opcode 0x0000
+  0xe6c    0000     Unknown opcode 0x0000
+  0xe6e    0000     Unknown opcode 0x0000
+  0xe70    0000     Unknown opcode 0x0000
+  0xe72    0000     Unknown opcode 0x0000
+  0xe74    0000     Unknown opcode 0x0000
+  0xe76    0000     Unknown opcode 0x0000
+  0xe78    0000     Unknown opcode 0x0000
+  0xe7a    0000     Unknown opcode 0x0000
+  0xe7c    0000     Unknown opcode 0x0000
+  0xe7e    0000     Unknown opcode 0x0000
+  0xe80    0000     Unknown opcode 0x0000
+  0xe82    0000     Unknown opcode 0x0000
+  0xe84    0000     Unknown opcode 0x0000
+  0xe86    0000     Unknown opcode 0x0000
+  0xe88    0000     Unknown opcode 0x0000
+  0xe8a    0000     Unknown opcode 0x0000
+  0xe8c    0000     Unknown opcode 0x0000
+  0xe8e    0000     Unknown opcode 0x0000
+  0xe90    0000     Unknown opcode 0x0000
+  0xe92    0000     Unknown opcode 0x0000
+  0xe94    0000     Unknown opcode 0x0000
+  0xe96    0000     Unknown opcode 0x0000
+  0xe98    6500     Set V5 = 0x00
+  0xe9a    172E     Jump to address 0x72e
+  0xe9c    6501     Set V5 = 0x01
+  0xe9e    172E     Jump to address 0x72e

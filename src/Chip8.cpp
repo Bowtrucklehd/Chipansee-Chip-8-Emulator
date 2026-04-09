@@ -8,7 +8,7 @@
 #include <spdlog/spdlog.h>
 #include <stdexcept>
 
-Chip8::Chip8(Display& display, Input& input, Chip8Config& config) : display(display), input(input), pc(0x200), config(config), key_was_down(false) {
+Chip8::Chip8(Display& display, Input& input, Chip8Config& config) : display(display), input(input), pc(0x200), config(config), key_was_down(false), menu_selection_made(false) {
         if (config.high_res_support)
                 display.setHighRes(false);
         uint8_t chip_fontset[80] = {
@@ -97,6 +97,14 @@ void Chip8::set_draw_flag(bool value) {
 
 void Chip8::send_vertical_blank_interrupt() {
         vertical_blank_interrupt = true;
+}
+
+bool Chip8::is_menu_done() const {
+        return menu_selection_made;
+}
+
+uint8_t Chip8::get_memory_byte(uint16_t addr) const {
+        return memory[addr];
 }
 
 uint16_t Chip8::fetch() {
@@ -536,6 +544,9 @@ void Chip8::op_0xF(const Instruction& i) {
                         } else {
                                 spdlog::debug("[memory] LOAD: I unchanged at {:#05x}", index);
                         }
+                        break;
+                case 0xFF:
+                        menu_selection_made = true;
                         break;
                 default:
                         spdlog::warn("unknown FXNN opcode: {:#06x}", i.full_opcode);

@@ -48,6 +48,9 @@ class Chip8 {
                 bool get_draw_flag();
                 void set_draw_flag(bool value);
                 void send_vertical_blank_interrupt();
+
+                bool     is_menu_done() const;
+                uint8_t  get_memory_byte(uint16_t addr) const;
         private:
                 uint16_t fetch();
                 Instruction decode(uint16_t opcode);
@@ -86,4 +89,5 @@ class Chip8 {
 
                 bool draw_flag;
                 bool vertical_blank_interrupt;
+                bool menu_selection_made;
 };

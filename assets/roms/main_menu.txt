@@ -1,0 +1,374 @@
+; ============================================================
+; 5-quirks.ch8  -  Main Menu + Platform Selector
+; ============================================================
+;
+; MEMORY MAP (runtime):
+;   0x1FF  = preset mode written by launcher before boot
+;            (0=show menu, 1=CHIP-8, 2=CHIP-48, 4=SUPER-CHIP, 3=XO-CHIP)
+;   0x842  = selected mode (written here, read by test suite)
+;
+; REGISTER CONVENTIONS (menu phase):
+;   V0/V1  = sprite draw position X / Y  (or temp)
+;   V2     = max selectable index (upper bound for key F)
+;   V3     = cursor blink toggle (0 or 1)
+;   V4     = scratch / key value / timer
+;   V5     = cursor position (currently highlighted option, 0-based)
+;   V6     = confirmed selection index
+;   VD/VE  = draw X / Y for text rendering subroutines
+;
+; NAVIGATION KEYS (interactive menu):
+;   Key E  = move cursor up   (previous option)
+;   Key F  = move cursor down (next option)
+;   Key A  = confirm selection
+; ============================================================
+
+
+; ============================================================
+; ENTRY POINT
+; ============================================================
+
+  0x200    130C     Jump to 0x30c  (main)
+
+
+; ============================================================
+; SUBROUTINE: wait_for_keyrelease  [called via CALL 0x202]
+;
+; Scans keys 0x0 through 0xF in order.
+; Waits until the key currently held (V0) is released.
+; Increments V0 and repeats until all 16 keys are checked.
+; Returns with V0 = 0x10 (sentinel = no key held).
+; ============================================================
+
+  0x202    6000     V0 = 0                         ; start scanning from key 0
+  0x204    E0A1     if key[V0] NOT pressed → skip  ; key V0 is up → advance to next
+  0x206    1204     else jump back to 0x204         ; key still held → keep waiting
+  0x208    7001     V0 += 1                         ; move to next key
+  0x20a    4010     if V0 != 0x10 → skip            ; not done yet
+  0x20c    00EE     RET                             ; all 16 checked, V0 = 0x10 = "no key"
+  0x20e    1204     jump to 0x204                   ; check the next key
+
+
+; ============================================================
+; SUBROUTINE: show_interactive_selector  [entered via JP 0x210]
+;
+; Displays a blinking cursor next to the options drawn by the caller.
+; Keys E / F move the cursor up / down.
+; Key A confirms and jumps to 0x280 with V6 = chosen index.
+;
+; Input (set by caller before jumping here):
+;   V0 / V1  = bytes of a `LD I, <option_table>` instruction
+;              (e.g. 0xA8, 0xF7  → `LD I, 0x8F7`)
+;              These two bytes are self-modified into the code at 0x222 and 0x282.
+;   V2       = maximum valid index (0-based; last selectable option number)
+;
+; Self-modifying code targets:
+;   0x222  → patched to `LD I, <option_table_base>`
+;   0x282  → patched to `LD I, <option_table_base>`
+; ============================================================
+
+  0x210    6500     V5 = 0                           ; cursor starts at option 0
+
+  ; patch instruction at 0x222 with the caller-provided LD I instruction
+  0x212    A222     I = 0x222
+  0x214    F155     mem[0x222..0x223] = V0, V1       ; overwrites opcode at 0x222
+
+  ; patch instruction at 0x282 with the same LD I instruction
+  0x216    A282     I = 0x282
+  0x218    F155     mem[0x282..0x283] = V0, V1       ; overwrites opcode at 0x282
+
+  0x21a    1222     jump to 0x222                    ; enter the selection loop
+
+; --- selection loop body ---
+
+  ; draw (or erase) the blinking cursor sprite at the current row
+  0x21c    4301     if V3 != 1 → skip                ; V3 = blink state
+  0x21e    D012     draw 2-byte sprite [I] at (V0, V1) ; cursor sprite
+  0x220    2202     call wait_for_keyrelease
+
+  ; load Y position of the current option from the option table
+  ; (patched instruction: LD I, <option_table_base>)
+  0x222    0000     [SMC SLOT] LD I, <option_table>  ; <- patched at runtime
+
+  ; I += V5 * 4  (each table entry is 4 bytes)
+  0x224    F51E     I += V5
+  0x226    F51E     I += V5
+  0x228    F51E     I += V5
+  0x22a    F51E     I += V5
+
+  0x22c    F165     V0, V1 = mem[I], mem[I+1]        ; V1 = row Y for cursor sprite
+
+  ; reset blink timer
+  0x22e    6300     V3 = 0
+  0x230    F315     delay_timer = V3                  ; DT = 0
+
+  ; check if blink timer has expired
+  0x232    F407     V4 = delay_timer
+  0x234    3400     if V4 == 0 → skip
+  0x236    1244     jump to 0x244 (skip redrawing cursor, just check keys)
+
+  ; timer expired → draw cursor and restart blink timer
+  0x238    A853     I = 0x853                         ; cursor sprite address
+  0x23a    D012     draw 2-byte sprite [I] at (V0, V1)
+  0x23c    640A     V4 = 10
+  0x23e    F415     delay_timer = V4                  ; restart ~10-tick blink
+  0x240    6401     V4 = 1
+  0x242    8343     V3 = V3 XOR V4                    ; toggle blink state
+
+; --- key handling ---
+
+  ; Key E = move cursor UP (previous option)
+  0x244    640E     V4 = 0x0E
+  0x246    E49E     if key[E] pressed → skip
+  0x248    1252     jump to check key F
+  0x24a    4500     if V5 != 0 → skip                 ; already at top?
+  0x24c    1252     jump to check key F               ; yes → can't go higher
+  0x24e    75FF     V5 -= 1                           ; move cursor up
+  0x250    121C     jump back to draw cursor
+
+  ; Key F = move cursor DOWN (next option)
+  0x252    640F     V4 = 0x0F
+  0x254    E49E     if key[F] pressed → skip
+  0x256    1260     jump to check key A (confirm)
+  0x258    9520     if V5 != V2 → skip                ; already at bottom?
+  0x25a    1260     jump to check key A               ; yes → can't go lower
+  0x25c    7501     V5 += 1                           ; move cursor down
+  0x25e    121C     jump back to draw cursor
+
+; --- confirm ---
+
+  ; Key A = confirm current selection
+  0x260    8650     V6 = V5                           ; V6 = confirmed choice index
+  0x262    640A     V4 = 0x0A
+  0x264    E4A1     if key[A] NOT pressed → skip
+  0x266    1280     jump to 0x280 (selection confirmed)
+
+  ; debounce / timing loop while no confirm key is held
+  0x268    6400     V4 = 0
+  0x26a    7201     V2 += 1
+  0x26c    7401     V4 += 1
+  0x26e    E49E     if key[V4] pressed → skip
+  0x270    1278     jump to 0x278
+  0x272    8640     V6 = V4
+  0x274    76FF     V6 -= 1
+  0x276    1280     jump to 0x280 (quick-press confirm)
+  0x278    5420     if V4 == V2 → skip
+  0x27a    126C     jump to 0x26c
+  0x27c    72FF     V2 -= 1
+  0x27e    1232     jump back to blink/key loop
+
+
+; ============================================================
+; SUBROUTINE: load_selected_option  [continues after Key A]
+;
+; Waits for key release, then loads the Y position and jump target
+; for the confirmed option (V6) from the option table.
+; Patches the JP at 0x29A to point at the chosen option's handler.
+; ============================================================
+
+  0x280    2202     call wait_for_keyrelease
+
+  ; (patched instruction: LD I, <option_table_base>)
+  0x282    0000     [SMC SLOT] LD I, <option_table>  ; <- patched at runtime
+
+  ; I += V6 * 4 + 2  (skip 2-byte Y field, read the 2-byte jump target)
+  0x284    F61E     I += V6
+  0x286    F61E     I += V6
+  0x288    F61E     I += V6
+  0x28a    F61E     I += V6
+  0x28c    6402     V4 = 2
+  0x28e    F41E     I += V4                           ; skip past Y field
+
+  0x290    F165     V0, V1 = mem[I], mem[I+1]         ; load jump target bytes
+
+  ; form a JP instruction: force top nibble to 0x1
+  0x292    6410     V4 = 0x10
+  0x294    8041     V0 = V0 OR V4                     ; e.g. 0x03 → 0x13
+
+  ; write the JP instruction into 0x29A
+  0x296    A29A     I = 0x29a
+  0x298    F155     mem[0x29a..0x29b] = V0, V1
+
+  0x29a    0000     [SMC SLOT] JP <mode_handler>     ; <- patched at runtime
+
+
+; ============================================================
+; SUBROUTINE: draw_text_string  [CALL 0x29C]
+;
+; Draws a null-terminated sequence of 4px-wide characters.
+; Reads up to 12 character indices from [I] into V0..VC.
+; VD / VE = starting draw X / Y position.
+; 0 = end of string. Calls draw_character for each non-zero register.
+; ============================================================
+
+  0x29c    FC65     V0..VC = mem[I..I+12]             ; load up to 12 char indices
+  0x29e    2302     call draw_character (first char in V0)
+
+  0x2a0    4100     if V1 == 0 → RET
+  0x2a2    00EE     RET
+  0x2a4    8010     V0 = V1 ; then call draw_character
+  0x2a6    2302     call draw_character
+  0x2a8    4200     if V2 == 0 → RET
+  0x2aa    00EE     RET
+  0x2ac    8020     V0 = V2
+  0x2ae    2302     call draw_character
+  0x2b0    4300     if V3 == 0 → RET
+  0x2b2    00EE     RET
+  0x2b4    8030     V0 = V3
+  0x2b6    2302     call draw_character
+  0x2b8    4400     if V4 == 0 → RET
+  0x2ba    00EE     RET
+  0x2bc    8040     V0 = V4
+  0x2be    2302     call draw_character
+  0x2c0    4500     if V5 == 0 → RET
+  0x2c2    00EE     RET
+  0x2c4    8050     V0 = V5
+  0x2c6    2302     call draw_character
+  0x2c8    4600     if V6 == 0 → RET
+  0x2ca    00EE     RET
+  0x2cc    8060     V0 = V6
+  0x2ce    2302     call draw_character
+  0x2d0    4700     if V7 == 0 → RET
+  0x2d2    00EE     RET
+  0x2d4    8070     V0 = V7
+  0x2d6    2302     call draw_character
+  0x2d8    4800     if V8 == 0 → RET
+  0x2da    00EE     RET
+  0x2dc    8080     V0 = V8
+  0x2de    2302     call draw_character
+  0x2e0    4900     if V9 == 0 → RET
+  0x2e2    00EE     RET
+  0x2e4    8090     V0 = V9
+  0x2e6    2302     call draw_character
+  0x2e8    4A00     if VA == 0 → RET
+  0x2ea    00EE     RET
+  0x2ec    80A0     V0 = VA
+  0x2ee    2302     call draw_character
+  0x2f0    4B00     if VB == 0 → RET
+  0x2f2    00EE     RET
+  0x2f4    80B0     V0 = VB
+  0x2f6    2302     call draw_character
+  0x2f8    4C00     if VC == 0 → RET
+  0x2fa    00EE     RET
+  0x2fc    80C0     V0 = VC
+  0x2fe    2302     call draw_character
+  0x300    00EE     RET
+
+
+; ============================================================
+; SUBROUTINE: draw_character  [CALL 0x302]
+;
+; Draws one 4-byte-tall glyph from the custom font table at 0x857.
+; V0  = character index.
+; VD / VE = draw position X / Y.
+; Advances VD by 4 after drawing (4px character width).
+; ============================================================
+
+  0x302    A857     I = 0x857                         ; base of custom font table
+  0x304    F01E     I += V0                           ; select glyph
+  0x306    DDE4     draw 4-byte sprite [I] at (VD, VE)
+  0x308    7D04     VD += 4                           ; advance X cursor
+  0x30a    00EE     RET
+
+
+; ============================================================
+; MAIN  [0x30C]
+;
+; Clears screen, reads 0x1FF for a launcher-preset mode.
+; If valid (1/2/4/3) → skip menu and jump straight to mode handler.
+; Otherwise → draw the 4-option menu and launch the selector.
+; ============================================================
+
+  0x30c    00E0     CLS
+
+  0x30e    A1FF     I = 0x1FF
+  0x310    F065     V0 = mem[0x1FF]                   ; read launcher-preset byte
+
+  0x312    4001     if V0 != 1 → skip
+  0x314    1380     JP 0x380  (CHIP-8)
+
+  0x316    4002     if V0 != 2 → skip
+  0x318    1388     JP 0x388  (CHIP-48)
+
+  0x31a    4004     if V0 != 4 → skip
+  0x31c    1390     JP 0x390  (SUPER-CHIP)
+
+  0x31e    4003     if V0 != 3 → skip
+  0x320    1398     JP 0x398  (XO-CHIP)
+
+; --- draw 4-option menu ---
+
+  0x322    6D06     VD = 6
+  0x324    6E02     VE = 2
+  0x326    A903     I = 0x903                         ; "CHIP-8" label
+  0x328    229C     call draw_text_string
+
+  0x32a    6D0A     VD = 10
+  0x32c    6E0A     VE = 10
+  0x32e    A911     I = 0x911                         ; "CHIP-48" label
+  0x330    229C     call draw_text_string
+
+  0x332    6D0A     VD = 10
+  0x334    6E0F     VE = 15
+  0x336    A91A     I = 0x91a                         ; "SUPER-CHIP" label
+  0x338    229C     call draw_text_string
+
+  0x33a    6D0A     VD = 10
+  0x33c    6E14     VE = 20
+  0x33e    A927     I = 0x927                         ; "XO-CHIP" label
+  0x340    229C     call draw_text_string
+
+  0x342    2370     call draw_logo
+
+  ; V0/V1 = bytes of  LD I, 0x8F7  (option table for 4-option menu)
+  ; V2    = 2 (3 options, 0-based max index... wraps to cover all 4)
+  0x344    60A8     V0 = 0xA8
+  0x346    61F7     V1 = 0xF7
+  0x348    6202     V2 = 2
+  0x34a    1210     JP show_interactive_selector
+
+
+; ============================================================
+; SUBROUTINE: draw_logo  [CALL 0x370]
+;
+; Draws the ">>" decoration in the bottom-right corner.
+; ============================================================
+
+  0x370    6A32     VA = 50
+  0x372    6B1B     VB = 27
+  0x374    A9CB     I = 0x9CB
+  0x376    DAB4     draw 4-byte sprite [I] at (VA, VB)
+  0x378    6A3A     VA = 58
+  0x37a    A9CF     I = 0x9CF
+  0x37c    DAB4     draw 4-byte sprite [I] at (VA, VB)
+  0x37e    00EE     RET
+
+
+; ============================================================
+; MODE STORE HANDLERS  [0x380 – 0x39C]
+;
+; Store the selected mode ID into address 0x842, then fall through
+; to the post-selection handler (0x39E) which runs the test suite.
+;
+;   1 = CHIP-8       2 = CHIP-48
+;   4 = SUPER-CHIP   3 = XO-CHIP
+; ============================================================
+
+  0x380    A842     I = 0x842
+  0x382    6001     V0 = 1
+  0x384    F055     mem[0x842] = 1  (CHIP-8)
+  0x386    139E     JP 0x39e
+
+  0x388    A842     I = 0x842
+  0x38a    6002     V0 = 2
+  0x38c    F055     mem[0x842] = 2  (CHIP-48)
+  0x38e    139E     JP 0x39e
+
+  0x390    A842     I = 0x842
+  0x392    6004     V0 = 4
+  0x394    F055     mem[0x842] = 4  (SUPER-CHIP)
+  0x396    139E     JP 0x39e
+
+  0x398    A842     I = 0x842
+  0x39a    6003     V0 = 3
+  0x39c    F055     mem[0x842] = 3  (XO-CHIP)
+  ; falls through to 0x39E → test suite dispatch
