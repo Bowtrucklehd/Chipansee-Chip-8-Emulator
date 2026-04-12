@@ -1,1 +1,0 @@
-/usr/bin/c++ -g -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/test_display.dir/src/test_display.cpp.o CMakeFiles/test_display.dir/src/Display.cpp.o -o test_display   -L/opt/homebrew/Cellar/sdl2/2.32.10/lib  -Wl,-rpath,/opt/homebrew/Cellar/sdl2/2.32.10/lib /opt/homebrew/Cellar/sdl2/2.32.10/lib/libSDL2.dylib _deps/spdlog-build/libspdlogd.a

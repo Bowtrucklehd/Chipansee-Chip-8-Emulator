@@ -4,6 +4,7 @@
 
 #include <SDL2/SDL.h>
 #include <chrono>
+#include <functional>
 #include <spdlog/spdlog.h>
 #include <stdexcept>
 
@@ -22,11 +23,48 @@ static Chip8Config* config_from_menu_selection(uint8_t selection) {
     switch (selection) {
         case 1:  return &ORIGINAL;
         case 2:  return &CHIP48;
-        case 4:  return &SUPERCHIP_MODERN;
         case 3:  return &SUPERCHIP_LEGACY;
+        case 4:  return &SUPERCHIP_MODERN;
         default:
             spdlog::warn("Unknown menu selection {:#04x}, defaulting to ORIGINAL", selection);
             return &ORIGINAL;
+    }
+}
+
+static bool runLoop(Chip8& chip8, Display& display, Input& input, const Chip8Config& config,
+                    const std::function<bool()>& stopCondition = nullptr) {
+    auto lastCycle = std::chrono::high_resolution_clock::now();
+    auto lastTimer = std::chrono::high_resolution_clock::now();
+    auto lastFrame = std::chrono::high_resolution_clock::now();
+
+    while (true) {
+        auto now = std::chrono::high_resolution_clock::now();
+
+        if (!input.pollEvents())
+            return false;
+
+        if (now - lastCycle >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / config.cycles_per_second)) {
+            chip8.cycle();
+            lastCycle = now;
+        }
+
+        if (now - lastFrame >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / config.frames_per_second)) {
+            chip8.sendVerticalBlankInterrupt();
+            if (chip8.getDrawFlag()) {
+                display.render();
+                chip8.setDrawFlag(false);
+            }
+            lastFrame = now;
+        }
+
+        if (now - lastTimer >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / config.frames_per_second)) {
+            chip8.decrementDelay();
+            chip8.decrementSound();
+            lastTimer = now;
+        }
+
+        if (stopCondition && stopCondition())
+            return true;
     }
 }
 
@@ -35,37 +73,7 @@ static void run_emulator(const std::string& romPath, Chip8Config& config) {
     Input   input;
     Chip8   chip8(display, input, config);
     chip8.loadRom(romPath);
-
-    auto lastCycle = std::chrono::high_resolution_clock::now();
-    auto lastTimer = std::chrono::high_resolution_clock::now();
-    auto lastFrame = std::chrono::high_resolution_clock::now();
-
-    while (true) {
-        auto now = std::chrono::high_resolution_clock::now();
-
-        if (!input.pollEvents())
-            break;
-
-        if (now - lastCycle >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / config.cycles_per_second)) {
-            chip8.cycle();
-            lastCycle = now;
-        }
-
-        if (now - lastFrame >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / config.frames_per_second)) {
-            chip8.send_vertical_blank_interrupt();
-            if (chip8.get_draw_flag()) {
-                display.render();
-                chip8.set_draw_flag(false);
-            }
-            lastFrame = now;
-        }
-
-        if (now - lastTimer >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / config.frames_per_second)) {
-            chip8.decrement_delay();
-            chip8.decrement_sound();
-            lastTimer = now;
-        }
-    }
+    runLoop(chip8, display, input, config);
 }
 
 static Chip8Config* run_menu() {
@@ -74,42 +82,13 @@ static Chip8Config* run_menu() {
     Chip8   chip8(display, input, ORIGINAL);
     chip8.loadRom(MENU_ROM_PATH);
 
-    auto lastCycle = std::chrono::high_resolution_clock::now();
-    auto lastTimer = std::chrono::high_resolution_clock::now();
-    auto lastFrame = std::chrono::high_resolution_clock::now();
+    bool completed = runLoop(chip8, display, input, ORIGINAL, [&chip8] { return chip8.isMenuDone(); });
+    if (!completed)
+        return nullptr;
 
-    while (true) {
-        auto now = std::chrono::high_resolution_clock::now();
-
-        if (!input.pollEvents())
-            return nullptr;
-
-        if (now - lastCycle >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / ORIGINAL.cycles_per_second)) {
-            chip8.cycle();
-            lastCycle = now;
-        }
-
-        if (now - lastFrame >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / ORIGINAL.frames_per_second)) {
-            chip8.send_vertical_blank_interrupt();
-            if (chip8.get_draw_flag()) {
-                display.render();
-                chip8.set_draw_flag(false);
-            }
-            lastFrame = now;
-        }
-
-        if (now - lastTimer >= std::chrono::microseconds(MICROSECONDS_IN_A_SECOND / ORIGINAL.frames_per_second)) {
-            chip8.decrement_delay();
-            chip8.decrement_sound();
-            lastTimer = now;
-        }
-
-        if (chip8.is_menu_done()) {
-            uint8_t selection = chip8.get_memory_byte(0x842);
-            spdlog::info("Menu selection: {:#04x}", selection);
-            return config_from_menu_selection(selection);
-        }
-    }
+    uint8_t selection = chip8.getMemoryByte(0x842);
+    spdlog::info("Menu selection: {:#04x}", selection);
+    return config_from_menu_selection(selection);
 }
 
 int main(int argc, char* argv[]) {

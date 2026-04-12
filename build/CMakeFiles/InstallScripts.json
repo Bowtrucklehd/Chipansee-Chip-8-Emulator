@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/cmake_install.cmake",
-		"/Users/henriweidner/Documents/Privat/programming/Chip8-Emulator/build/_deps/spdlog-build/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

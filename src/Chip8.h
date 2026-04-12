@@ -2,8 +2,8 @@
 
 #include "Display.h"
 #include "Input.h"
-#include <SDL_stdinc.h>
 #include <cstdint>
+#include <random>
 #include <stack>
 #include <string>
 
@@ -24,37 +24,41 @@ struct Chip8Config {
 };
 
 struct Instruction {
-        uint16_t full_opcode; // full opcode
-        uint8_t code; // first nibble
-        uint8_t x; // second nibble
-        uint8_t y; // third nibble
-        uint8_t N; // fourth nibble
-        uint8_t NN; // second byte
-        uint16_t NNN; // second, third and fourth nibble
+        uint16_t full_opcode;
+        uint8_t  code;
+        uint8_t  x;
+        uint8_t  y;
+        uint8_t  N;
+        uint8_t  NN;
+        uint16_t NNN;
 };
 
 class Chip8 {
 
         public:
                 Chip8(Display& display, Input& input, Chip8Config& config);
-                ~Chip8();
 
                 void loadRom(const std::string& path);
                 void cycle();
 
-                void decrement_delay();
-                void decrement_sound();
+                void decrementDelay();
+                void decrementSound();
 
-                bool get_draw_flag();
-                void set_draw_flag(bool value);
-                void send_vertical_blank_interrupt();
+                bool getDrawFlag() const;
+                void setDrawFlag(bool value);
+                void sendVerticalBlankInterrupt();
 
-                bool     is_menu_done() const;
-                uint8_t  get_memory_byte(uint16_t addr) const;
+                bool    isMenuDone() const;
+                uint8_t getMemoryByte(uint16_t addr) const;
+
         private:
-                uint16_t fetch();
+                uint16_t    fetch();
                 Instruction decode(uint16_t opcode);
-                bool execute(Instruction instruction);
+                void        execute(Instruction instruction);
+
+                bool tryConsumeVBlank(bool lowResOnly = false);
+                void storeRegisters(uint8_t upToRegister);
+                void loadRegisters(uint8_t upToRegister);
 
                 void op_0x0(const Instruction& i);
                 void op_0x1(const Instruction& i);
@@ -69,25 +73,28 @@ class Chip8 {
                 void op_0xA(const Instruction& i);
                 void op_0xB(const Instruction& i);
                 void op_0xC(const Instruction& i);
-                bool op_0xD(const Instruction& i);
+                void op_0xD(const Instruction& i);
                 void op_0xE(const Instruction& i);
                 void op_0xF(const Instruction& i);
 
-                Display& display;
-                Input& input;
+                Display&     display;
+                Input&       input;
                 Chip8Config& config;
 
-                uint8_t memory[4096];
-                uint16_t index;
-                uint16_t pc;
-                uint8_t variable_register[16];
+                uint8_t              memory[4096]          = {};
+                uint16_t             index                 = 0;
+                uint16_t             pc;
+                uint8_t              variable_register[16] = {};
                 std::stack<uint16_t> stack;
-                uint8_t delay_timer;
-                uint8_t sound_timer;
+                uint8_t              delay_timer           = 0;
+                uint8_t              sound_timer           = 0;
 
-                bool key_was_down;
+                bool    key_was_down     = false;
+                uint8_t last_pressed_key = 0;
 
-                bool draw_flag;
-                bool vertical_blank_interrupt;
-                bool menu_selection_made;
+                bool draw_flag                = false;
+                bool vertical_blank_interrupt = false;
+                bool menu_selection_made      = false;
+
+                std::mt19937 rng{std::random_device{}()};
 };
